@@ -5,7 +5,7 @@
       <!-- logo -->
       <div class="logo">
         <img src="./assets/AppLogo.png" alt="logo" />
-        <span>网易云音乐</span>
+        <span>叽歪音乐</span>
       </div>
       <!-- 搜索框 -->
       <div class="search">
@@ -112,6 +112,7 @@ export default {
 
       .searchInfo {
         position: absolute;
+        top: 50px;
       }
     }
   }
