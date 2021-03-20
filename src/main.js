@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import axios from "axios";
-import { ElButton, ElScrollbar, ElTabs, ElTabPane, ElTable, ElLoading } from 'element-plus';
+import { ElButton, ElScrollbar, ElTabs, ElTabPane, ElTable, ElLoading, ElTableColumn } from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 import App from './App.vue';
 
@@ -18,5 +18,6 @@ app.component(ElScrollbar.name, ElScrollbar);
 app.component(ElTabs.name, ElTabs);
 app.component(ElTabPane.name, ElTabPane);
 app.component(ElTable.name, ElTable);
+app.component(ElTableColumn.name, ElTableColumn);
 
 app.mount('#app');

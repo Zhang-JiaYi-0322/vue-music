@@ -28,13 +28,9 @@ import search from "./components/searchBar.vue";
 export default {
   name: "App",
   data() {
-    return {
-      
-    };
+    return {};
   },
-  methods: {
-    
-  },
+  methods: {},
   components: {
     search,
   },
@@ -84,6 +80,7 @@ export default {
     flex: 1;
     display: flex;
     background-color: rgb(255, 255, 255);
+    overflow: hidden;
 
     nav {
       width: 200px;
@@ -94,6 +91,7 @@ export default {
     article {
       flex: 1;
       height: 100%;
+      // overflow: hidden;
     }
   }
 
