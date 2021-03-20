@@ -8,7 +8,12 @@
       v-model="searchKey"
     />
     <i class="el-icon-search"></i>
-    <div class="searchContainer">
+    <div
+      class="searchContainer"
+      v-if="searchFocus"
+      @mouseenter="onContent = true"
+      @mouseleave="onContent = false"
+    >
       <el-scrollbar class="scrollBar" style="height: 100%">
         <div class="history">
           <div class="bar">
@@ -22,7 +27,10 @@
               >查看全部</a
             >
           </div>
-          <div class="historyBox" :style="showAll ? { height: 'auto' } : {}">
+          <div
+            class="historyBox"
+            :style="showAll ? { height: 'auto', 'max-height': '999px' } : {}"
+          >
             <span class="noHistory" v-if="history.length == 0"
               >暂无历史记录</span
             >
@@ -32,6 +40,7 @@
               size="mini"
               v-for="(item, index) in history"
               :key="index"
+              @click="route(item)"
               >{{ item }}</el-button
             >
           </div>
@@ -40,22 +49,29 @@
           <h6>热搜榜</h6>
           <span class="error" v-if="error">加载失败</span>
           <ul>
-            <li v-for="(item, index) in hots" :key="index">
-              <router-link class="link">
-                <span
-                  class="index"
-                  :style="{ color: index < 3 ? 'red' : 'gray' }"
-                  >{{ index + 1 }}</span
-                >
-                <div class="content">
-                  <div class="row">
-                    <strong class="title">{{ item.searchWord }}</strong>
-                    <img v-if="item.iconUrl" :src="item.iconUrl" alt="" />
-                    <span class="dgree">{{ item.score }}</span>
-                  </div>
-                  <span class="info">{{ item.content }}</span>
+            <li
+              v-for="(item, index) in hots"
+              :key="index"
+              @click="route(item.searchWord)"
+            >
+              <!-- <router-link
+                class="link"
+                :to="'/searchResult/' + item.searchWord"
+                @click="hideSelf"
+              ></router-link> -->
+              <span
+                class="index"
+                :style="{ color: index < 3 ? 'red' : 'gray' }"
+                >{{ index + 1 }}</span
+              >
+              <div class="content">
+                <div class="row">
+                  <strong class="title">{{ item.searchWord }}</strong>
+                  <img v-if="item.iconUrl" :src="item.iconUrl" alt="" />
+                  <span class="dgree">{{ item.score }}</span>
                 </div>
-              </router-link>
+                <span class="info">{{ item.content }}</span>
+              </div>
             </li>
           </ul>
         </div>
@@ -65,13 +81,11 @@
 </template>
 
 <script>
-import router from "../route/search.router.js";
-
 export default {
   data() {
     return {
-      // searchFocus: false,
-      searchFocus: true,
+      searchFocus: false,
+      // searchFocus: true,
       searchKey: "搜索",
       history: [
         "周杰伦",
@@ -87,45 +101,31 @@ export default {
       hots: [],
       showAll: false,
       error: false,
+      onContent: false,
     };
   },
-  created() {
-    // 获取热搜榜
-    window.$axios
-      .get("/search/hot/detail")
-      .then((response) => {
-        if (response.status == 200) {
-          this.hots = response.data.data;
-        } else {
-          this.error = true;
-        }
-      })
-      .catch(() => {
-        // console.log(e);
-        this.error = true;
-      });
-
-    // 获取历史记录
-    this.getHistory();
-  },
+  created() {},
   methods: {
     getFocus() {
+      this.getInfo();
       this.searchFocus = true;
       this.searchKey = "";
     },
     loseFocus() {
-      // this.searchFocus = false;
-      this.searchKey = "搜索";
+      if (!this.onContent) {
+        // this.$router.push("/searchResult/" + this.searchKey);
+        this.searchFocus = false;
+      }
     },
     search() {
-      // 搜索逻辑
-
       const info = this.searchKey;
       let history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
       history.unshift(info);
+      history.length = 20;
       localStorage.setItem("searchHistory", JSON.stringify(history));
       this.getHistory();
-      this.searchKey = "搜索";
+
+      this.route(this.searchKey);
     },
     getHistory() {
       this.history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
@@ -137,8 +137,35 @@ export default {
     showAllHistory() {
       this.showAll = true;
     },
+    getInfo() {
+      // 获取热搜榜
+      window.$axios
+        .get("/search/hot/detail")
+        .then((response) => {
+          if (response.status == 200) {
+            this.hots = response.data.data;
+          } else {
+            this.error = true;
+          }
+        })
+        .catch(() => {
+          // console.log(e);
+          this.error = true;
+        });
+
+      // 获取历史记录
+      this.getHistory();
+    },
+    // hideSelf(key) {
+    //   this.searchKey = key;
+    //   this.searchFocus = false;
+    // },
+    route(key) {
+      this.$router.push("/searchResult/" + key);
+      this.searchKey = key;
+      this.searchFocus = false;
+    },
   },
-  router,
 };
 </script>
 
@@ -175,57 +202,74 @@ a {
     color: rgb(249, 216, 216);
   }
 
-  .searchInfo {
+  .searchContainer {
     position: absolute;
     top: 50px;
-  }
-}
+    box-sizing: border-box;
+    width: 350px;
+    height: 447px;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    //   border: 1px solid #666;
+    box-shadow: 0px 0px 10px rgb(179, 179, 179);
+    overflow: auto;
 
-.searchContainer {
-  box-sizing: border-box;
-  width: 350px;
-  height: 447px;
-  border-radius: 5px;
-  background-color: rgb(255, 255, 255);
-  //   border: 1px solid #666;
-  box-shadow: 0px 0px 10px rgb(179, 179, 179);
-  overflow: auto;
+    .history {
+      .bar {
+        height: 50px;
+        overflow: hidden;
+        span {
+          float: left;
+          color: #666;
+          font-size: 14px;
+          margin-right: 5px;
+        }
+        .delete {
+          transform: scale(0.9, 0.9);
+        }
+        .showAll {
+          float: right;
+          font-size: 12px;
+        }
+        &::after {
+          content: "";
+          width: 0;
+          height: 0;
+          clear: both;
+        }
+      }
 
-  .history {
-    .bar {
-      height: 50px;
-      overflow: hidden;
-      span {
-        float: left;
-        color: #666;
-        font-size: 14px;
-        margin-right: 5px;
-      }
-      .delete {
-        transform: scale(0.9, 0.9);
-      }
-      .showAll {
-        float: right;
-        font-size: 12px;
-      }
-      &::after {
-        content: "";
-        width: 0;
-        height: 0;
-        clear: both;
+      .historyBox {
+        margin-top: -5px;
+        width: 100%;
+        max-height: 80px;
+        line-height: 38px;
+        overflow: hidden;
+        .historyBtn {
+          margin: 0 8px 0 0;
+        }
+        .noHistory {
+          display: block;
+          height: 100%;
+          font-size: 12px;
+          font-style: italic;
+          margin: 0 0;
+          text-align: center;
+        }
       }
     }
 
-    .historyBox {
-      margin-top: -5px;
-      width: 100%;
-      height: 80px;
-      line-height: 38px;
-      overflow: hidden;
-      .historyBtn {
-        margin: 0 8px 0 0;
+    .hot {
+      line-height: 1;
+      h6 {
+        text-decoration: none;
+        font-weight: 400;
+        color: #666;
+        font-size: 14px;
+        margin: 15px 0;
       }
-      .noHistory {
+
+      .error {
         display: block;
         height: 100%;
         font-size: 12px;
@@ -233,42 +277,27 @@ a {
         margin: 0 0;
         text-align: center;
       }
-    }
-  }
 
-  .hot {
-    line-height: 1;
-    h6 {
-      text-decoration: none;
-      font-weight: 400;
-      color: #666;
-      font-size: 14px;
-      margin: 15px 0;
-    }
+      ul {
+        padding: 0;
+        list-style: none;
 
-    .error {
-      display: block;
-      height: 100%;
-      font-size: 12px;
-      font-style: italic;
-      margin: 0 0;
-      text-align: center;
-    }
-
-    ul {
-      padding: 0;
-      list-style: none;
-
-      li {
-        // position: relative;
-        height: 50px;
-        display: flex;
-        margin-bottom: 10px;
-        &:hover {
-          background-color: rgb(242, 242, 242);
-        }
-
-        .link {
+        li {
+          position: relative;
+          height: 60px;
+          display: flex;
+          // margin-bottom: 10px;
+          &:hover {
+            background-color: rgb(242, 242, 242);
+          }
+          .link {
+            position: absolute;
+            display: block;
+            width: 100%;
+            height: 60px;
+            top: 0px;
+            left: 0px;
+          }
           .index {
             width: 40px;
             line-height: 50px;
@@ -304,10 +333,10 @@ a {
         }
       }
     }
-  }
 
-  .scrollBar {
-    padding: 0px 20px;
+    .scrollBar {
+      padding: 0px 20px;
+    }
   }
 }
 </style> 

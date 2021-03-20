@@ -13,9 +13,19 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      activeName: "first",
+    };
   },
-  methods: {},
+  methods: {
+    handleClick() {
+        console.log(123);
+    },
+  },
+  created() {
+    console.log(this.$route);
+    // /cloudsearch?keywords= 海阔天空
+  },
 };
 </script>
 

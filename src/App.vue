@@ -13,7 +13,9 @@
     <!-- 内容部分 -->
     <div class="container">
       <nav>nav</nav>
-      <article>article</article>
+      <article>
+        <router-view></router-view>
+      </article>
     </div>
     <!-- 底部播放器 -->
     <footer>footer</footer>
@@ -73,7 +75,9 @@ export default {
       }
     }
 
-    
+    .search {
+      z-index: 999;
+    }
   }
 
   .container {
