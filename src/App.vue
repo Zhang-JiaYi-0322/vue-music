@@ -8,11 +8,7 @@
         <span>叽歪音乐</span>
       </div>
       <!-- 搜索框 -->
-      <div class="search">
-        <input type="text" value="搜索" @focus="getFocus" @blur="loseFocus" />
-        <i class="el-icon-search"></i>
-        <search-info class="searchInfo" v-if="searchFocus"></search-info>
-      </div>
+      <search class="search"></search>
     </header>
     <!-- 内容部分 -->
     <div class="container">
@@ -25,26 +21,20 @@
 </template>
 
 <script>
-import searchInfo from "./components/searchInfo.vue";
+import search from "./components/searchBar.vue";
 
 export default {
   name: "App",
   data() {
     return {
-      // searchFocus: false,
-      searchFocus: true,
+      
     };
   },
   methods: {
-    getFocus() {
-      this.searchFocus = true;
-    },
-    loseFocus() {
-      // this.searchFocus = false;
-    },
+    
   },
   components: {
-    searchInfo,
+    search,
   },
 };
 </script>
@@ -83,38 +73,7 @@ export default {
       }
     }
 
-    .search {
-      position: absolute;
-      top: 0px;
-      left: 50%;
-      transform: translateX(-50%);
-
-      input {
-        width: 20vw;
-        height: 24px;
-        border-radius: 12px;
-        background-color: rgb(225, 62, 62);
-        color: rgb(249, 216, 216);
-        border: 0;
-        outline: none;
-        padding-left: 33px;
-        padding-right: 10px;
-      }
-
-      i {
-        position: absolute;
-        top: 22px;
-        left: 10px;
-        width: 7px;
-        height: 7px;
-        color: rgb(249, 216, 216);
-      }
-
-      .searchInfo {
-        position: absolute;
-        top: 50px;
-      }
-    }
+    
   }
 
   .container {
