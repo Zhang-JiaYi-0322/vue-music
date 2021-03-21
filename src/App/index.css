@@ -39,12 +39,20 @@
 }
 .pageContainer .container nav {
   width: 200px;
+  min-width: 200px;
   height: 100%;
   border-right: 2px solid #e0e0e0;
+  padding: 10px 10px 0 10px;
+  box-sizing: border-box;
 }
 .pageContainer .container article {
   flex: 1;
   height: 100%;
+  overflow: auto;
+}
+.pageContainer .container article .content {
+  min-width: 1196px;
+  min-height: 556px;
 }
 .pageContainer footer {
   height: 70px;

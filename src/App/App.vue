@@ -12,9 +12,17 @@
     </header>
     <!-- 内容部分 -->
     <div class="container">
-      <nav>nav</nav>
+      <nav>
+        <el-tree
+          :data="navData"
+          :props="defaultProps"
+          @node-click="handleNodeClick"
+        ></el-tree>
+      </nav>
       <article>
-        <router-view></router-view>
+        <el-scrollbar class="scrollBar" style="height: 100%, width:100%">
+          <router-view class="content"></router-view>
+        </el-scrollbar>
       </article>
     </div>
     <!-- 底部播放器 -->

@@ -4,7 +4,7 @@
 }
 .searchResult {
   height: 100%;
-  overflow-x: hidden;
+  width: 100%;
 }
 .searchResult h4 {
   padding-left: 30px;

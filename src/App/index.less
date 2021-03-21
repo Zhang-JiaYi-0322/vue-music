@@ -1,63 +1,71 @@
 .pageContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-    width: 100vw;
-  
-    header {
-      position: relative;
-      height: 58px;
+  display        : flex;
+  flex-direction : column;
+  justify-content: space-between;
+  height         : 100vh;
+  width          : 100vw;
+
+  header {
+    position        : relative;
+    height          : 58px;
+    line-height     : 58px;
+    background-color: rgb(236, 65, 65);
+    padding-left    : 20px;
+
+    .logo {
+      height     : 58px;
       line-height: 58px;
-      background-color: rgb(236, 65, 65);
-      padding-left: 20px;
-  
-      .logo {
-        height: 58px;
-        line-height: 58px;
-  
-        img {
-          height: 40%;
-          vertical-align: middle;
-          margin-right: 5px;
-          transform: translateY(-3px);
-        }
-  
-        span {
-          height: 20px;
-          line-height: 20px;
-          font-size: 20px;
-          color: #fff;
-        }
+
+      img {
+        height        : 40%;
+        vertical-align: middle;
+        margin-right  : 5px;
+        transform     : translateY(-3px);
       }
-  
-      .search {
-        z-index: 999;
+
+      span {
+        height     : 20px;
+        line-height: 20px;
+        font-size  : 20px;
+        color      : #fff;
       }
     }
-  
-    .container {
-      flex: 1;
-      display: flex;
-      background-color: rgb(255, 255, 255);
-      overflow: hidden;
-  
-      nav {
-        width: 200px;
-        height: 100%;
-        border-right: 2px solid rgb(224, 224, 224);
-      }
-  
-      article {
-        flex: 1;
-        height: 100%;
-        // overflow: hidden;
-      }
-    }
-  
-    footer {
-      height: 70px;
-      background-color: rgb(246, 246, 248);
-      border-top: 1px solid #666;
+
+    .search {
+      z-index: 999;
     }
   }
+
+  .container {
+    flex            : 1;
+    display         : flex;
+    background-color: rgb(255, 255, 255);
+    overflow        : hidden;
+
+    nav {
+      width       : 200px;
+      min-width   : 200px;
+      height      : 100%;
+      border-right: 2px solid rgb(224, 224, 224);
+      padding     : 10px 10px 0 10px;
+      box-sizing  : border-box;
+    }
+
+    article {
+      flex    : 1;
+      height  : 100%;
+      overflow: auto;
+
+      .content {
+        min-width : 1196px;
+        min-height: 556px;
+      }
+    }
+  }
+
+  footer {
+    height          : 70px;
+    background-color: rgb(246, 246, 248);
+    border-top      : 1px solid #666;
+  }
+}
