@@ -6,6 +6,7 @@
       @blur="loseFocus"
       @keyup.enter="search"
       v-model="searchKey"
+      ref="input"
     />
     <i class="el-icon-search"></i>
     <div
@@ -52,7 +53,7 @@
             <li
               v-for="(item, index) in hots"
               :key="index"
-              @click="route(item.searchWord)"
+              @click="search(item.searchWord)"
             >
               <!-- <router-link
                 class="link"
@@ -111,21 +112,22 @@ export default {
       this.searchFocus = true;
       this.searchKey = "";
     },
-    loseFocus() {
+    loseFocus(e) {
+      console.log(e);
       if (!this.onContent) {
         // this.$router.push("/searchResult/" + this.searchKey);
         this.searchFocus = false;
       }
     },
-    search() {
-      const info = this.searchKey;
+    search(key = undefined) {
+      const info = key ? key : this.searchKey;
       let history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
       history.unshift(info);
-      history.length = 20;
+      if (history.length > 20) history.length = 20;
       localStorage.setItem("searchHistory", JSON.stringify(history));
       this.getHistory();
 
-      this.route(this.searchKey);
+      this.route(info);
     },
     getHistory() {
       this.history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
@@ -133,9 +135,11 @@ export default {
     clearHistory() {
       this.history = [];
       localStorage.setItem("searchHistory", "[]");
+      this.$refs.input.focus();
     },
     showAllHistory() {
       this.showAll = true;
+      this.$refs.input.focus();
     },
     getInfo() {
       // 获取热搜榜
