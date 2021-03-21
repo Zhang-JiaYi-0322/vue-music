@@ -26,6 +26,7 @@
               stripe
               style="width: 100%"
               @cell-click="songClick"
+              row-class-name="row"
             >
               <!-- 占位 -->
               <el-table-column prop="" label="" width="20"></el-table-column>
@@ -154,9 +155,51 @@
           ></el-pagination>
         </el-tab-pane>
         <!-- playList -->
-        <el-tab-pane v-if="onLoad" class="playList" label="歌单" name="fourth"
-          >歌单</el-tab-pane
-        >
+        <el-tab-pane v-if="onLoad" class="playList" label="歌单" name="fourth">
+          <el-table
+            class="table"
+            :data="playList.item"
+            stripe
+            style="width: 100%"
+            :show-header="false"
+            :row-style="{ height: '80px', overflow: 'hidden' }"
+            cell-class-name="cell"
+            @row-click="albumClick"
+          >
+            <el-table-column
+              class-name="column"
+              prop="default"
+              label=""
+              :width="500"
+            >
+              <template #default="scope">
+                <img class="pic" :src="scope.row.coverImgUrl" alt="" />
+                <span class="name">{{ scope.row.name }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              class-name="count"
+              prop="trackCount"
+              label=""
+              :formatter="playlistCountFormatter"
+            ></el-table-column>
+            <el-table-column prop="default" label="">
+              <template #default="scope">
+                <span class="by">by</span>
+                <span class="creator">{{ scope.row.creator.nickname }}</span>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-pagination
+            class="page"
+            background
+            layout="prev, pager, next"
+            :small="true"
+            :total="count"
+            :page-size="20"
+            @current-change="changePage"
+          ></el-pagination>
+        </el-tab-pane>
       </el-tabs>
     </el-scrollbar>
   </div>
@@ -277,7 +320,6 @@ export default {
               count: response.data.result.albumCount,
               item: response.data.result.albums,
             };
-            console.log(response.data.result.albums);
             this.count = this.album.count;
             this.onLoad = true;
           } else {
@@ -300,10 +342,11 @@ export default {
             this.playList = {
               count: response.data.result.playlistCount,
               more: response.data.result.hasMore,
-              item: response.data.result.playLists,
+              item: response.data.result.playlists,
             };
             this.count = this.playList.count;
             this.onLoad = true;
+            console.log(response.data.result.playlists);
           } else {
             this.error = true;
           }
@@ -368,6 +411,9 @@ export default {
         .toString()
         .padStart(2, "0");
       return mm + ":" + ss;
+    },
+    playlistCountFormatter(e) {
+      return e.trackCount + "首";
     },
     changePage(e) {
       this.index = e - 1;
@@ -440,6 +486,32 @@ export default {
   }
   .tab {
     margin: 0 auto;
+    .table {
+      margin: 0 auto;
+      vertical-align: middle;
+      .cell {
+        height: 60px;
+        line-height: 60px;
+        vertical-align: middle;
+      }
+      .column {
+        padding: 0;
+      }
+    }
+    .pic {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 20px;
+      height: 60px;
+      width: 60px;
+      border-radius: 5px;
+    }
+    .name {
+      display: inline-block;
+      margin-left: 15px;
+      height: 60px;
+      line-height: 60px;
+    }
     .song {
       margin-top: 20px;
       .artist {
@@ -481,87 +553,55 @@ export default {
       .table {
         margin-top: 20px;
         border-top: 1px solid rgb(242, 242, 242);
+        .cell {
+          height: 22.5px;
+          line-height: 22.5px;
+          padding: 0;
+        }
         .favorite {
           transform: scale(1.3);
         }
       }
     }
     .artist {
-      .table {
-        margin: 0 auto;
-        vertical-align: middle;
-        .cell {
-          height: 60px;
-          vertical-align: middle;
-        }
-        .column {
-          padding: 0;
-          .pic {
-            display: inline-block;
-            vertical-align: middle;
-            margin-left: 20px;
-            height: 60px;
-            width: 60px;
-            border-radius: 5px;
-          }
-          .name {
-            display: inline-block;
-            margin-left: 15px;
-            height: 60px;
-            line-height: 60px;
-          }
-          .icon {
-            float: right;
-            margin-top: 17px;
-            margin-right: 20px;
-            text-align: center;
-            width: 20px;
-            height: 20px;
-            line-height: 20px;
-            color: rgb(242, 242, 242);
-            background-color: rgb(243, 72, 66);
-            border-radius: 50%;
-            font-size: 12px;
-          }
-        }
+      .icon {
+        float: right;
+        margin-top: 17px;
+        margin-right: 20px;
+        text-align: center;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        color: rgb(242, 242, 242);
+        background-color: rgb(243, 72, 66);
+        border-radius: 50%;
+        font-size: 12px;
       }
     }
     .album {
-      .table {
-        margin: 0 auto;
-        vertical-align: middle;
-        .cell {
-          height: 60px;
-          vertical-align: middle;
-        }
-        .column {
-          padding: 0;
-          .pic {
-            display: inline-block;
-            vertical-align: middle;
-            margin-left: 20px;
-            height: 60px;
-            width: 60px;
-            border-radius: 5px;
-          }
-          .name {
-            display: inline-block;
-            margin-left: 15px;
-            height: 60px;
-            line-height: 60px;
-          }
-          .comment {
-            margin-left: 10px;
-            color: rgb(159, 159, 159);
-          }
-          .artist {
-            float: right;
-            margin-top: 20px;
-            margin-right: 40%;
-            font-size: 12px;
-          }
-        }
+      .comment {
+        margin-left: 10px;
+        color: rgb(159, 159, 159);
       }
+      .artist {
+        float: right;
+        // margin-top: 20px;
+        margin-right: 40%;
+        font-size: 12px;
+        transform: translateX(100%);
+      }
+    }
+  
+    // playerList
+    .count {
+      font-size: 12px;
+      color: rgb(159, 159, 159);
+    }
+    .by {
+      margin-right: 5px;
+      color: rgba(159, 159, 159, 0.5);
+      font-size: 12px;
+      transform: scale(0.7);
     }
   }
 }
