@@ -121,9 +121,38 @@
           ></el-pagination>
         </el-tab-pane>
         <!-- album -->
-        <el-tab-pane v-if="onLoad" class="album" label="专辑" name="third"
-          >专辑</el-tab-pane
-        >
+        <el-tab-pane v-if="onLoad" class="album" label="专辑" name="third">
+          <el-table
+            class="table"
+            :data="album.item"
+            stripe
+            style="width: 100%"
+            :show-header="false"
+            :row-style="{ height: '80px', overflow: 'hidden' }"
+            cell-class-name="cell"
+            @row-click="albumClick"
+          >
+            <el-table-column class-name="column" prop="default" label="">
+              <template #default="scope">
+                <img class="pic" :src="scope.row.picUrl" alt="" />
+                <span class="name">{{ scope.row.name }}</span>
+                <span class="comment">{{
+                  scope.row.alias.length > 0 ? `(${scope.row.alias[0]})` : ""
+                }}</span>
+                <span class="artist">{{ scope.row.artist.name }}</span>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-pagination
+            class="page"
+            background
+            layout="prev, pager, next"
+            :small="true"
+            :total="count"
+            :page-size="20"
+            @current-change="changePage"
+          ></el-pagination>
+        </el-tab-pane>
         <!-- playList -->
         <el-tab-pane v-if="onLoad" class="playList" label="歌单" name="fourth"
           >歌单</el-tab-pane
@@ -165,10 +194,10 @@ export default {
           this.getArtist();
           break;
         case "third":
-          this.getArtist();
+          this.getAlbum();
           break;
         case "fourth":
-          this.getAlbum();
+          this.getPlayList();
           break;
         default:
           alert("search type wrong: " + this.activeName);
@@ -377,7 +406,11 @@ export default {
     artistListClick(row) {
       console.log(row);
     },
+    albumClick(row) {
+      console.log(row);
+    },
   },
+  computed: {},
   components: { loading },
   created() {
     this.keyWord = this.$route.params.info;
@@ -488,6 +521,43 @@ export default {
             color: rgb(242, 242, 242);
             background-color: rgb(243, 72, 66);
             border-radius: 50%;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+    .album {
+      .table {
+        margin: 0 auto;
+        vertical-align: middle;
+        .cell {
+          height: 60px;
+          vertical-align: middle;
+        }
+        .column {
+          padding: 0;
+          .pic {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 20px;
+            height: 60px;
+            width: 60px;
+            border-radius: 5px;
+          }
+          .name {
+            display: inline-block;
+            margin-left: 15px;
+            height: 60px;
+            line-height: 60px;
+          }
+          .comment {
+            margin-left: 10px;
+            color: rgb(159, 159, 159);
+          }
+          .artist {
+            float: right;
+            margin-top: 20px;
+            margin-right: 40%;
             font-size: 12px;
           }
         }
