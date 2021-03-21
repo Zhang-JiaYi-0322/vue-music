@@ -54,11 +54,14 @@
   background-color: #f4f4f4;
   align-items: center;
   text-decoration: none;
+  border-radius: 5px;
+  overflow: hidden;
 }
 .searchResult .tab .song .artist a img {
   box-sizing: border-box;
   height: 100%;
   border: 1px solid royalblue;
+  border-radius: 5px;
 }
 .searchResult .tab .song .artist a span {
   flex: 1;

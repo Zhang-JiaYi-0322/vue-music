@@ -1,5 +1,6 @@
 <template>
   <div class="search">
+    <!-- 搜索框 -->
     <input
       type="text"
       @focus="getFocus"
@@ -8,6 +9,7 @@
       v-model="searchKey"
       ref="input"
     />
+    <!-- 详细信息面板 -->
     <i class="el-icon-search"></i>
     <div
       class="searchContainer"

@@ -1,7 +1,9 @@
 <template>
   <div class="searchResult">
     <el-scrollbar class="scrollBar" style="height: 100%">
+      <!-- 搜索结果 -->
       <h4 v-if="onLoad">找到{{ count || 0 }}个结果</h4>
+      <!-- 单曲 / 歌手 / 专辑 / 歌单 -->
       <el-tabs class="tab" v-model="activeName" @tab-click="handleClick">
         <loading
           v-if="!error && !onLoad"
