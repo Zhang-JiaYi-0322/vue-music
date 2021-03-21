@@ -7,6 +7,8 @@ import App from './App/App.vue';
 // import VueRouter from "vue-router";
 import router from "./router.js";
 
+import "./main.css";
+
 axios.defaults.baseURL = "/api";
 window.$axios = axios;
 

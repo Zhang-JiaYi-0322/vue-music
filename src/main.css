@@ -1,0 +1,52 @@
+/* 本文件用于修改 element-ui 组件编译后的样式 */
+
+html,
+body {
+  margin: 0 auto;
+  padding: 0;
+  /* min-width: 1390px; */
+  /* min-height: 685px; */
+}
+
+.el-tabs__item {
+  padding-left: 30px !important;
+  color: black !important;
+}
+
+.el-tabs__header {
+  margin: 0 !important;
+}
+
+.is-active {
+  font-weight: 600 !important;
+}
+
+.el-tabs__active-bar {
+  background-color: transparent !important;
+}
+
+.number,
+.btn-prev,
+.btn-next {
+  background-color: transparent !important;
+  border: 1px solid rgb(230, 230, 230) !important;
+  border-radius: 4px !important;
+  font-weight: 400 !important;
+}
+
+li.active {
+  background-color: rgb(236, 65, 65) !important;
+  color: rgb(230, 230, 230) !important;
+}
+
+.el-tree-node__content>.el-tree-node__expand-icon {
+  position: relative;
+  left: 95px;
+  top: 1px;
+}
+
+.el-tree-node__content {
+  height: 40px !important;
+  font-size: 14px;
+  color:  rgb(167, 165, 165);
+}

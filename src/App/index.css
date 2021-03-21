@@ -45,6 +45,11 @@
   padding: 10px 10px 0 10px;
   box-sizing: border-box;
 }
+.pageContainer .container nav .custom-tree-node span {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+}
 .pageContainer .container article {
   flex: 1;
   height: 100%;

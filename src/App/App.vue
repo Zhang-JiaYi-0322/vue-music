@@ -17,7 +17,14 @@
           :data="navData"
           :props="defaultProps"
           @node-click="handleNodeClick"
-        ></el-tree>
+          class="tree"
+        >
+          <template #default="{ node }">
+            <div class="custom-tree-node">
+              <span>{{ node.label }}</span>
+            </div>
+          </template>
+        </el-tree>
       </nav>
       <article>
         <el-scrollbar class="scrollBar" style="height: 100%, width:100%">
