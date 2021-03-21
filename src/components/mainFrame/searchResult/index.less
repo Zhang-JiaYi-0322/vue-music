@@ -1,0 +1,132 @@
+.page {
+    text-align: center;
+    margin: 40px auto;
+  }
+  .searchResult {
+    height: 100%;
+    overflow-x: hidden;
+    //   overflow-y: scroll;
+    h4 {
+      padding-left: 30px;
+    }
+    .tab {
+      margin: 0 auto;
+      .table {
+        margin: 0 auto;
+        vertical-align: middle;
+        .cell {
+          height: 60px;
+          line-height: 60px;
+          vertical-align: middle;
+        }
+        .column {
+          padding: 0;
+        }
+      }
+      .pic {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 20px;
+        height: 60px;
+        width: 60px;
+        border-radius: 5px;
+      }
+      .name {
+        display: inline-block;
+        margin-left: 15px;
+        height: 60px;
+        line-height: 60px;
+      }
+      .song {
+        margin-top: 20px;
+        .artist {
+          margin-left: 30px;
+          .match {
+            margin-bottom: 10px;
+          }
+          a {
+            display: flex;
+            width: 364px;
+            height: 80px;
+            background-color: rgb(244, 244, 244);
+            align-items: center;
+            text-decoration: none;
+  
+            img {
+              box-sizing: border-box;
+              // width: 100%;
+              height: 100%;
+              border: 1px solid royalblue;
+            }
+  
+            span {
+              // display: inline-block;
+              flex: 1;
+              padding-left: 16px;
+              height: 80px;
+              line-height: 80px;
+              color: black;
+            }
+  
+            i {
+              transform: scale(1.4);
+              padding-right: 20px;
+              color: rgb(154, 154, 154);
+            }
+          }
+        }
+        .table {
+          margin-top: 20px;
+          border-top: 1px solid rgb(242, 242, 242);
+          .cell {
+            height: 22.5px;
+            line-height: 22.5px;
+            padding: 0;
+          }
+          .favorite {
+            transform: scale(1.3);
+          }
+        }
+      }
+      .artist {
+        .icon {
+          float: right;
+          margin-top: 17px;
+          margin-right: 20px;
+          text-align: center;
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
+          color: rgb(242, 242, 242);
+          background-color: rgb(243, 72, 66);
+          border-radius: 50%;
+          font-size: 12px;
+        }
+      }
+      .album {
+        .comment {
+          margin-left: 10px;
+          color: rgb(159, 159, 159);
+        }
+        .artist {
+          float: right;
+          // margin-top: 20px;
+          margin-right: 40%;
+          font-size: 12px;
+          transform: translateX(100%);
+        }
+      }
+    
+      // playerList
+      .count {
+        font-size: 12px;
+        color: rgb(159, 159, 159);
+      }
+      .by {
+        margin-right: 5px;
+        color: rgba(159, 159, 159, 0.5);
+        font-size: 12px;
+        transform: scale(0.7);
+      }
+    }
+  }

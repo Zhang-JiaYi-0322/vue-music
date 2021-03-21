@@ -1,0 +1,119 @@
+.page {
+  text-align: center;
+  margin: 40px auto;
+}
+.searchResult {
+  height: 100%;
+  overflow-x: hidden;
+}
+.searchResult h4 {
+  padding-left: 30px;
+}
+.searchResult .tab {
+  margin: 0 auto;
+}
+.searchResult .tab .table {
+  margin: 0 auto;
+  vertical-align: middle;
+}
+.searchResult .tab .table .cell {
+  height: 60px;
+  line-height: 60px;
+  vertical-align: middle;
+}
+.searchResult .tab .table .column {
+  padding: 0;
+}
+.searchResult .tab .pic {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 20px;
+  height: 60px;
+  width: 60px;
+  border-radius: 5px;
+}
+.searchResult .tab .name {
+  display: inline-block;
+  margin-left: 15px;
+  height: 60px;
+  line-height: 60px;
+}
+.searchResult .tab .song {
+  margin-top: 20px;
+}
+.searchResult .tab .song .artist {
+  margin-left: 30px;
+}
+.searchResult .tab .song .artist .match {
+  margin-bottom: 10px;
+}
+.searchResult .tab .song .artist a {
+  display: flex;
+  width: 364px;
+  height: 80px;
+  background-color: #f4f4f4;
+  align-items: center;
+  text-decoration: none;
+}
+.searchResult .tab .song .artist a img {
+  box-sizing: border-box;
+  height: 100%;
+  border: 1px solid royalblue;
+}
+.searchResult .tab .song .artist a span {
+  flex: 1;
+  padding-left: 16px;
+  height: 80px;
+  line-height: 80px;
+  color: black;
+}
+.searchResult .tab .song .artist a i {
+  transform: scale(1.4);
+  padding-right: 20px;
+  color: #9a9a9a;
+}
+.searchResult .tab .song .table {
+  margin-top: 20px;
+  border-top: 1px solid #f2f2f2;
+}
+.searchResult .tab .song .table .cell {
+  height: 22.5px;
+  line-height: 22.5px;
+  padding: 0;
+}
+.searchResult .tab .song .table .favorite {
+  transform: scale(1.3);
+}
+.searchResult .tab .artist .icon {
+  float: right;
+  margin-top: 17px;
+  margin-right: 20px;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  color: #f2f2f2;
+  background-color: #f34842;
+  border-radius: 50%;
+  font-size: 12px;
+}
+.searchResult .tab .album .comment {
+  margin-left: 10px;
+  color: #9f9f9f;
+}
+.searchResult .tab .album .artist {
+  float: right;
+  margin-right: 40%;
+  font-size: 12px;
+  transform: translateX(100%);
+}
+.searchResult .tab .count {
+  font-size: 12px;
+  color: #9f9f9f;
+}
+.searchResult .tab .by {
+  margin-right: 5px;
+  color: rgba(159, 159, 159, 0.5);
+  font-size: 12px;
+  transform: scale(0.7);
+}

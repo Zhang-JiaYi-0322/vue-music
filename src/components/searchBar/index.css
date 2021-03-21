@@ -1,0 +1,153 @@
+a {
+  text-decoration: none;
+  color: #666;
+}
+.search {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.search input {
+  width: 20vw;
+  height: 24px;
+  border-radius: 12px;
+  background-color: #e13e3e;
+  color: #f9d8d8;
+  border: 0;
+  outline: none;
+  padding-left: 33px;
+  padding-right: 10px;
+}
+.search i {
+  position: absolute;
+  top: 22px;
+  left: 10px;
+  width: 7px;
+  height: 7px;
+  color: #f9d8d8;
+}
+.search .searchContainer {
+  position: absolute;
+  top: 50px;
+  box-sizing: border-box;
+  width: 350px;
+  height: 447px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px #b3b3b3;
+  overflow: auto;
+}
+.search .searchContainer .history .bar {
+  height: 50px;
+  overflow: hidden;
+}
+.search .searchContainer .history .bar span {
+  float: left;
+  color: #666;
+  font-size: 14px;
+  margin-right: 5px;
+}
+.search .searchContainer .history .bar .delete {
+  transform: scale(0.9, 0.9);
+}
+.search .searchContainer .history .bar .showAll {
+  float: right;
+  font-size: 12px;
+}
+.search .searchContainer .history .bar::after {
+  content: "";
+  width: 0;
+  height: 0;
+  clear: both;
+}
+.search .searchContainer .history .historyBox {
+  margin-top: -5px;
+  width: 100%;
+  max-height: 80px;
+  line-height: 38px;
+  overflow: hidden;
+}
+.search .searchContainer .history .historyBox .historyBtn {
+  margin: 0 8px 0 0;
+}
+.search .searchContainer .history .historyBox .noHistory {
+  display: block;
+  height: 100%;
+  font-size: 12px;
+  font-style: italic;
+  margin: 0 0;
+  text-align: center;
+}
+.search .searchContainer .hot {
+  line-height: 1;
+}
+.search .searchContainer .hot h6 {
+  text-decoration: none;
+  font-weight: 400;
+  color: #666;
+  font-size: 14px;
+  margin: 15px 0;
+}
+.search .searchContainer .hot .error {
+  display: block;
+  height: 100%;
+  font-size: 12px;
+  font-style: italic;
+  margin: 0 0;
+  text-align: center;
+}
+.search .searchContainer .hot ul {
+  padding: 0;
+  list-style: none;
+}
+.search .searchContainer .hot ul li {
+  position: relative;
+  height: 60px;
+  display: flex;
+}
+.search .searchContainer .hot ul li:hover {
+  background-color: #f2f2f2;
+}
+.search .searchContainer .hot ul li .link {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 60px;
+  top: 0px;
+  left: 0px;
+}
+.search .searchContainer .hot ul li .index {
+  width: 40px;
+  line-height: 50px;
+}
+.search .searchContainer .hot ul li .content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-size: 12px;
+}
+.search .searchContainer .hot ul li .content .row {
+  flex: 1;
+  line-height: 25px;
+}
+.search .searchContainer .hot ul li .content .row .title {
+  margin-right: 5px;
+}
+.search .searchContainer .hot ul li .content .row img {
+  padding-top: 10px;
+  height: 12px;
+}
+.search .searchContainer .hot ul li .content .row .dgree {
+  display: inline-block;
+  color: gray;
+  transform: translateY(1px) scale(0.9);
+}
+.search .searchContainer .hot ul li .content .info {
+  flex: 1;
+  line-height: 25px;
+  color: gray;
+}
+.search .searchContainer .scrollBar {
+  padding: 0px 20px;
+}

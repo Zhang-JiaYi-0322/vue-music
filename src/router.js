@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import searchResult from "./components/mainFrame/searchResult.vue";
+import searchResult from "./components/mainFrame/searchResult/searchResult.vue";
 
 const router = createRouter({
     history: createWebHistory(),
