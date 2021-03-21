@@ -9,12 +9,13 @@
           icon="el-icon-loading"
         ></loading>
         <loading v-if="error" text="加载失败" icon="el-icon-close"></loading>
+        <!-- song -->
         <el-tab-pane v-if="onLoad" class="song" label="单曲" name="first">
           <div class="artist" v-if="index == 0" @click="artistClick">
             <h5 class="match">最佳匹配</h5>
             <a href="#" @click.prevent="searchArtist">
-              <img :src="song.item[0].artists[0].img1v1Url" alt="" srcset="" />
-              <span>歌手：{{ song.item[0].artists[0].name }}</span>
+              <img :src="song.artist.img1v1Url" alt="" srcset="" />
+              <span>歌手：{{ song.artist.name }}</span>
               <i class="el-icon-arrow-right"> </i>
             </a>
           </div>
@@ -89,12 +90,41 @@
           >
           </el-pagination>
         </el-tab-pane>
-        <el-tab-pane v-if="onLoad" class="artist" label="歌手" name="second"
-          >歌手</el-tab-pane
-        >
+        <!-- artist -->
+        <el-tab-pane v-if="onLoad" class="artist" label="歌手" name="second">
+          <el-table
+            class="table"
+            :data="artist.item"
+            stripe
+            style="width: 100%"
+            :show-header="false"
+            :row-style="{ height: '80px', overflow: 'hidden' }"
+            cell-class-name="cell"
+            @row-click="artistListClick"
+          >
+            <el-table-column class-name="column" prop="default" label="">
+              <template #default="scope">
+                <img class="pic" :src="scope.row.img1v1Url" alt="" />
+                <span class="name">{{ scope.row.name }}</span>
+                <i class="icon el-icon-user"> </i>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-pagination
+            class="page"
+            background
+            layout="prev, pager, next"
+            :small="true"
+            :total="count"
+            :page-size="20"
+            @current-change="changePage"
+          ></el-pagination>
+        </el-tab-pane>
+        <!-- album -->
         <el-tab-pane v-if="onLoad" class="album" label="专辑" name="third"
           >专辑</el-tab-pane
         >
+        <!-- playList -->
         <el-tab-pane v-if="onLoad" class="playList" label="歌单" name="fourth"
           >歌单</el-tab-pane
         >
@@ -109,10 +139,11 @@ import loading from "../loading.vue";
 export default {
   data() {
     return {
+      keyWord: "",
       error: false,
       onLoad: false,
       activeName: "first",
-      song: { more: false, item: [], count: 0 }, // 单曲
+      song: { more: false, item: [], count: 0, artist: null }, // 单曲
       artist: { more: false, item: [], count: 0 }, // 歌手
       album: { more: false, item: [] }, // 专辑
       playList: { more: false, item: [], count: 0 }, //歌单
@@ -126,74 +157,22 @@ export default {
     handleClick() {
       this.error = false;
       this.onLoad = false;
-      let type;
-      let limit;
       switch (this.activeName) {
         case "first":
-          type = 1;
-          limit = 100;
+          this.getSong();
           break;
         case "second":
-          type = 100;
-          limit = 20;
+          this.getArtist();
           break;
         case "third":
-          type = 10;
-          limit = 20;
+          this.getArtist();
           break;
         case "fourth":
-          type = 1000;
-          limit = 20;
+          this.getAlbum();
           break;
         default:
           alert("search type wrong: " + this.activeName);
       }
-      window.$axios
-        .get(
-          `/search?type=${type}&limit=${limit}&keywords=` +
-            this.$route.params.info
-        )
-        .then((response) => {
-          if (response.status == 200) {
-            switch (this.activeName) {
-              case "first":
-                this.getSong();
-                break;
-              case "second":
-                this.artist = {
-                  count: response.data.result.artistCount,
-                  more: response.data.result.hasMore,
-                  item: response.data.result.artists,
-                };
-                this.count = this.artist.count;
-                this.onLoad = true;
-                break;
-              case "third":
-                this.album = {
-                  count: response.data.result.albumCount,
-                  item: response.data.result.albums,
-                };
-                this.count = this.album.count;
-                this.onLoad = true;
-                break;
-              case "fourth":
-                this.playList = {
-                  count: response.data.result.playlistCount,
-                  more: response.data.result.hasMore,
-                  item: response.data.result.playLists,
-                };
-                this.count = this.playList.count;
-                this.onLoad = true;
-                break;
-            }
-          } else {
-            this.error = true;
-          }
-        })
-        .catch(() => {
-          // console.log(e);
-          this.error = true;
-        });
     },
     searchArtist() {
       console.log("searchArtist");
@@ -213,6 +192,88 @@ export default {
             };
             this.count = this.song.count;
             this.song.item.length = this.count - this.index * 100;
+            this.song.artist = this.song.item[0].artists[0];
+            this.onLoad = true;
+            if (this.index == 0) this.getMatchedArtist();
+          } else {
+            this.error = true;
+          }
+        })
+        .catch(() => {
+          // console.log(e);
+          this.error = true;
+        });
+    },
+    getMatchedArtist() {
+      // 获取最佳匹配歌手的照片
+      window.$axios.get(`/artists?id=` + this.song.artist.id).then((res) => {
+        if (res.status == 200) {
+          this.song.artist.img1v1Url = res.data.artist.img1v1Url;
+        }
+      });
+    },
+    getArtist(offset = 0) {
+      window.$axios
+        .get(
+          `/search?type=100&offset=${offset}&limit=20&keywords=` +
+            this.$route.params.info
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            this.artist = {
+              count: response.data.result.artistCount,
+              more: response.data.result.hasMore,
+              item: response.data.result.artists,
+            };
+            this.count = this.artist.count;
+            this.onLoad = true;
+          } else {
+            this.error = true;
+          }
+        })
+        .catch(() => {
+          // console.log(e);
+          this.error = true;
+        });
+    },
+    getAlbum(offset = 0) {
+      window.$axios
+        .get(
+          `/search?type=10&offset=${offset}&limit=20&keywords=` +
+            this.$route.params.info
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            this.album = {
+              count: response.data.result.albumCount,
+              item: response.data.result.albums,
+            };
+            console.log(response.data.result.albums);
+            this.count = this.album.count;
+            this.onLoad = true;
+          } else {
+            this.error = true;
+          }
+        })
+        .catch(() => {
+          // console.log(e);
+          this.error = true;
+        });
+    },
+    getPlayList(offset = 0) {
+      window.$axios
+        .get(
+          `/search?type=1000&offset=${offset}&limit=20&keywords=` +
+            this.$route.params.info
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            this.playList = {
+              count: response.data.result.playlistCount,
+              more: response.data.result.hasMore,
+              item: response.data.result.playLists,
+            };
+            this.count = this.playList.count;
             this.onLoad = true;
           } else {
             this.error = true;
@@ -281,7 +342,20 @@ export default {
     },
     changePage(e) {
       this.index = e - 1;
-      this.getSong(e - 1);
+      switch (this.activeName) {
+        case "first":
+          this.getSong(e - 1);
+          break;
+        case "second":
+          this.getArtist(e - 1);
+          break;
+        case "third":
+          this.getAlbum(e - 1);
+          break;
+        case "fourth":
+          this.getPlayList(e - 1);
+          break;
+      }
       this.reload();
     },
     reload() {
@@ -295,18 +369,35 @@ export default {
         console.log("song click");
       }
     },
+    // 最佳匹配的歌手点击事件
     artistClick() {
       console.log("artist click");
+    },
+    // 歌手列表的点击事件
+    artistListClick(row) {
+      console.log(row);
     },
   },
   components: { loading },
   created() {
+    this.keyWord = this.$route.params.info;
     this.getSong();
+  },
+  beforeUpdate() {
+    if (this.keyWord != this.$route.params.info) {
+      this.keyWord = this.$route.params.info;
+      this.activeName = "first";
+      this.getSong();
+    }
   },
 };
 </script>
 
 <style lang="less" scoped>
+.page {
+  text-align: center;
+  margin: 40px auto;
+}
 .searchResult {
   height: 100%;
   overflow-x: hidden;
@@ -315,8 +406,9 @@ export default {
     padding-left: 30px;
   }
   .tab {
+    margin: 0 auto;
     .song {
-      margin-top: -20px;
+      margin-top: 20px;
       .artist {
         margin-left: 30px;
         .match {
@@ -360,9 +452,45 @@ export default {
           transform: scale(1.3);
         }
       }
-      .page {
-        text-align: center;
-        margin: 40px auto;
+    }
+    .artist {
+      .table {
+        margin: 0 auto;
+        vertical-align: middle;
+        .cell {
+          height: 60px;
+          vertical-align: middle;
+        }
+        .column {
+          padding: 0;
+          .pic {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 20px;
+            height: 60px;
+            width: 60px;
+            border-radius: 5px;
+          }
+          .name {
+            display: inline-block;
+            margin-left: 15px;
+            height: 60px;
+            line-height: 60px;
+          }
+          .icon {
+            float: right;
+            margin-top: 17px;
+            margin-right: 20px;
+            text-align: center;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            color: rgb(242, 242, 242);
+            background-color: rgb(243, 72, 66);
+            border-radius: 50%;
+            font-size: 12px;
+          }
+        }
       }
     }
   }
