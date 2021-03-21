@@ -50,6 +50,9 @@
   height: 40px;
   line-height: 40px;
 }
+.pageContainer .container nav .custom-tree-node .icon {
+  margin-right: 5px;
+}
 .pageContainer .container article {
   flex: 1;
   height: 100%;

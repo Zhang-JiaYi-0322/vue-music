@@ -17,11 +17,18 @@
           :data="navData"
           :props="defaultProps"
           @node-click="handleNodeClick"
+          :default-expand-all="true"
           class="tree"
         >
-          <template #default="{ node }">
+          <template #default="{ node, data }">
             <div class="custom-tree-node">
-              <span>{{ node.label }}</span>
+              <i
+                :class="getClass(data)"
+                :style="{ color: data.strong ? '' : '#666' }"
+              ></i>
+              <span class="label" :style="getStyle(data)">{{
+                labelFormatter(node.label)
+              }}</span>
             </div>
           </template>
         </el-tree>
