@@ -5,15 +5,18 @@ export default {
   data() {
     return {
       navData: [
-        { label: "发现音乐", strong: true, icon: false },
+        { label: "发现音乐", strong: true, icon: false, id: "foundMusic" },
         {
-          label: "创建的歌单", strong: false, icon: false, children: [
-            { label: "我喜欢的音乐", favorite: true },
+          label: "创建的歌单", strong: false, icon: false, route: false, children: [
+            { label: "我喜欢的音乐", favorite: true, id: "favorite" },
+            { label: "因为没做账号相关", favorite: false },
+            { label: "创建的歌单不好保存", favorite: false },
+            { label: "所以没做相关内容", favorite: false },
           ]
         },
         {
-          label: "收藏的歌单", strong: false, icon: false, children: [
-            { label: "暂无歌单", icon: false }
+          label: "收藏的歌单", strong: false, icon: false, route: false, children: [
+            { label: "暂无歌单", icon: false, route: false }
           ]
         }
       ]
@@ -50,14 +53,34 @@ export default {
     },
     loadCreatedPlayList() {
       // let storage = JSON.parse(localStorage.getItem("createdPlayList") || "[]");
-      // this.navData[1].children.push()
+      // this.navData[1].children.concat(storage)；
     },
     loadSavedPlayList() {
-      // let storage = JSON.parse(localStorage.getItem("savedPlayList") || "[]");
+      const storage = JSON.parse(localStorage.getItem("savedPlayList") || "[]");
+      if (storage.length > 0)
+        this.navData[2].children = storage;
       // localStorage.setItem("savedPlayList", JSON.stringify(storage));
-    }
+    },
+    route(data) {
+      // 发现音乐
+      if (data.id == "foundMusic") {
+        console.log(data);
+      }
+      // 我喜欢的音乐
+      else if (data.id == "favorite") {
+        this.$router.push("/playList/favorite/我喜欢的音乐");
+      }
+      // 其他
+      else if (data.route !== false) {
+        console.log(data);
+      }
+    },
   },
   components: {
     search,
+  },
+  created() {
+    this.loadCreatedPlayList();
+    this.loadSavedPlayList();
   },
 };

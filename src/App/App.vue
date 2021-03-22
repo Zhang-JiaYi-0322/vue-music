@@ -15,9 +15,9 @@
       <nav>
         <el-tree
           :data="navData"
-          :props="defaultProps"
-          @node-click="handleNodeClick"
+          @node-click="route"
           :default-expand-all="true"
+          :highlight-current="true"
           class="tree"
         >
           <template #default="{ node, data }">
