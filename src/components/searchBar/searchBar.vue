@@ -83,6 +83,6 @@
   </div>
 </template>
 
-<script src="./index.js"></script>
+<script src="./searchBar.js"></script>
 
-<style src="./index.css" scoped></style> 
+<style src="./searchBar.css" scoped></style> 

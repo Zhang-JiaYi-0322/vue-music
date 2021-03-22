@@ -44,7 +44,7 @@
   </div>
 </template>
 
-<script src="./index.js"></script>
+<script src="./App.js"></script>
 
-<style src="./index.css" scoped></style>
+<style src="./App.css" scoped></style>
 

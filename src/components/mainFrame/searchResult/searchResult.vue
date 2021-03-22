@@ -207,6 +207,6 @@
   </div>
 </template>
 
-<script src="./index.js"></script>
+<script src="./searchResult.js"></script>
 
-<style src="./index.css" scoped></style>
+<style src="./searchResult.css" scoped></style>
