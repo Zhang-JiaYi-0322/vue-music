@@ -99,3 +99,33 @@
   font-size: 14px;
   color: #666;
 }
+.playList .body .titleBox {
+  margin-left: 20px;
+}
+.playList .body .titleBox .title {
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+}
+.playList .body .titleBox .inputBox {
+  float: right;
+  position: relative;
+  margin-right: 20px;
+  transform: translateY(-3px);
+}
+.playList .body .titleBox .inputBox .input {
+  box-sizing: border-box;
+  padding: 0 30px 0 10px;
+  width: 200px;
+  height: 26px;
+  border-radius: 13px;
+  border: none;
+  outline: none;
+  background-color: #f7f7f7;
+  color: gray;
+}
+.playList .body .titleBox .inputBox i {
+  position: absolute;
+  top: 6px;
+  right: 7px;
+}

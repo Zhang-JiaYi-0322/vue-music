@@ -3,6 +3,7 @@ import loading from "../../loading.vue";
 export default {
     data() {
         return {
+            isTableAlive: true,
             error: false,
             onLoad: false,
             songs: [],
@@ -13,6 +14,7 @@ export default {
             saved: false,
             date: "2021-3-22",
             coverImg: require("../../../assets/logo.png"),
+            inputKey: "搜索歌单音乐",
         }
     },
     methods: {
@@ -25,10 +27,11 @@ export default {
                                 if (res.status == 200) {
                                     const data = res.data.songs[0];
                                     this.songs.push({
+                                        id,
                                         img: data.al.picUrl,
                                         name: data.name,
                                         artist: this.formatArtist(data.ar),
-                                        duration: this.formatDuration(data.dr),
+                                        duration: this.formatDuration(data.dt),
                                         album: data.al.name
                                     });
                                     resolve();
@@ -61,6 +64,13 @@ export default {
             const ss = Math.floor((dr - mm) * 60).toString().padStart(2, "0");
             return `${mm}:${ss}`;
         },
+        formatIndex(index) {
+            index = index.toString();
+            if (index.length < 2) {
+                index = "0" + index;
+            }
+            return index;
+        },
         getSavedBtnStyle() {
             if (this.canSave) {
                 return { color: "black" };
@@ -84,7 +94,40 @@ export default {
             else {
                 return "已收藏";
             }
-        }
+        },
+        searchFocus() {
+            this.inputKey = "";
+        },
+        searchBlur() {
+            if (this.inputKey == "") {
+                this.inputKey = "搜索歌单音乐";
+            }
+        },
+        checkFavorite(e, flag) {
+            const id = e.row.id;
+            let favorite = JSON.parse(localStorage.getItem("favorite") || "[]");
+            const index = favorite.indexOf(id);
+            if (index >= 0) {
+                return flag ? "red" : "el-icon-star-on";
+            } else {
+                return flag ? "gray" : "el-icon-star-off";
+            }
+        },
+        unFavorite(info) {
+            const musicId = info.row.id;
+            let favorite = JSON.parse(localStorage.getItem("favorite") || "[]");
+            const index = favorite.indexOf(musicId);
+            if (index >= 0) {
+                favorite.splice(index, 1);
+                for (let i = 0; i < this.songs.length; i++) {
+                    if (this.songs[i].id == musicId) {
+                        this.songs.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+            localStorage.setItem("favorite", JSON.stringify(favorite));
+        },
     },
     components: { loading },
     created() {

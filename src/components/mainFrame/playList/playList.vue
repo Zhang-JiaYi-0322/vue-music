@@ -41,7 +41,66 @@
         </div>
       </div>
     </div>
-    <div class="body" v-if="!error && onLoad"></div>
+    <div class="body" v-if="!error && onLoad && isTableAlive">
+      <div class="titleBox">
+        <span class="title">歌曲列表</span>
+        <div class="inputBox">
+          <input
+            class="input"
+            type="text"
+            :value="inputKey"
+            @focus="searchFocus"
+            @blur="searchBlur"
+          />
+          <i class="el-icon-search"></i>
+        </div>
+      </div>
+      <el-table
+        :data="songs"
+        style="width: 100%"
+        :default-sort="{ prop: '', order: 'descending' }"
+      >
+        <el-table-column prop="" label="" width="20"></el-table-column>
+        <el-table-column prop="" label="" width="50" type="index" :index="formatIndex">
+        </el-table-column>
+        <el-table-column prop="" label="" width="70">
+          <template #default="scope">
+            <i
+              :id="scope.row.id"
+              :class="checkFavorite(scope) + ' ' + `favorite`"
+              :style="{ color: checkFavorite(scope, true) }"
+              @click="unFavorite(scope)"
+            ></i>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="音乐标题"
+          sortable
+          width="400"
+          :show-overflow-tooltip="true"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="artist"
+          label="歌手"
+          sortable
+          width="280"
+          :show-overflow-tooltip="true"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="album"
+          label="专辑"
+          sortable
+          :formatter="formatter"
+          :show-overflow-tooltip="true"
+        >
+        </el-table-column>
+        <el-table-column prop="duration" label="时长" sortable width="120">
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
