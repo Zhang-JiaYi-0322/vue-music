@@ -1,4 +1,6 @@
 import loading from "../../loading.vue";
+const creatorIcon = require("../../../assets/logo.png");
+const coverImg = require("../../../assets/AppLogo.png");
 
 export default {
     data() {
@@ -10,12 +12,13 @@ export default {
             songsLib: [],
             title: "歌单",
             creator: "???",
-            creatorIcon: require("../../../assets/logo.png"),
+            creatorIcon: creatorIcon,
             canSave: true,
             saved: false,
             date: "2021-3-22",
-            coverImg: require("../../../assets/AppLogo.png"),
+            coverImg: coverImg,
             inputKey: "搜索歌单音乐",
+            favoriteList: false,
         }
     },
     methods: {
@@ -151,18 +154,36 @@ export default {
                 return flag ? "gray" : "el-icon-star-off";
             }
         },
-        unFavorite(info) {
+        favorite(info) {
             const musicId = info.row.id;
             let favorite = JSON.parse(localStorage.getItem("favorite") || "[]");
             const index = favorite.indexOf(musicId);
+            const el = document.getElementById(musicId);
             if (index >= 0) {
                 favorite.splice(index, 1);
-                for (let i = 0; i < this.songs.length; i++) {
-                    if (this.songs[i].id == musicId) {
-                        this.songs.splice(i, 1);
-                        break;
+                if (this.favoriteList) {
+                    for (let i = 0; i < this.songs.length; i++) {
+                        if (this.songs[i].id == musicId) {
+                            this.songs.splice(i, 1);
+                            break;
+                        }
                     }
                 }
+                else {
+                    el.className = el.className.replace(
+                        "el-icon-star-on",
+                        "el-icon-star-off"
+                    );
+                    el.style.color = "gray";
+                }
+            }
+            if (index < 0 && !this.favoriteList) {
+                favorite.unshift(musicId);
+                el.className = el.className.replace(
+                    "el-icon-star-off",
+                    "el-icon-star-on"
+                );
+                el.style.color = "red";
             }
             localStorage.setItem("favorite", JSON.stringify(favorite));
         },
@@ -173,65 +194,97 @@ export default {
         },
         savePlayList() {
             let storage = JSON.parse(localStorage.getItem("savedPlayList") || "[]");
-            if (!this.saved) {
-                storage.push({ id: this.$route.params.id, label: this.title });
-                this.saved = true;
+            const id = this.$route.params.id;
+            const res = this.checkSavedList(storage, id);
+            if (res.found) {
+                storage.splice(res.index, 1);
+                this.saved = false;
             }
             else {
-                for (let i = 0; i < storage.length; i++) {
-                    if (storage[i].id == this.$route.params.id) {
-                        storage.splice(i, 1);
-                        localStorage.setItem("savedPlayList", JSON.stringify(storage));
-                        this.saved = false;
-                        break;
-                    }
-                }
+                storage.push({ id, label: this.$route.params.name });
+                this.saved = true;
             }
+            localStorage.setItem("savedPlayList", JSON.stringify(storage));
+            this.$emit("reloadList");
         },
         getDate(time) {
             const yyyy = time.getFullYear();
             const mm = (time.getMonth() + 1).toString().padStart(2, "0");
-            const dd = time.getDay().toString().padStart(2, "0");
+            const dd = time.getDate().toString().padStart(2, "0");
             return `${yyyy}-${mm}-${dd}`;
+        },
+        checkSavedList(storage, id) {
+            for (let i = 0; i < storage.length; i++) {
+                if (storage[i].id == id) {
+                    return { index: i, found: true };
+                }
+            }
+            return { index: -1, found: false };
+        },
+        init(id, name) {
+            id = id ? id : this.$route.params.id;
+            name = name ? name : this.$route.params.name;
+            this.title = name;
+            if (id == "favorite") {
+                this.creator = "自己";
+                this.canSave = false;
+                this.favoriteList = true;
+                this.getSongs(JSON.parse(localStorage.getItem("favorite") || "[]"));
+            }
+            else {
+                this.canSave = true;
+                const storage = JSON.parse(localStorage.getItem("savedPlayList") || "[]");
+                const res = this.checkSavedList(storage, id);
+                if (res.found) {
+                    this.saved = true;
+                }
+                else {
+                    this.saved = false;
+                }
+                window.$axios
+                    .get("/playlist/detail?id=" + id)
+                    .then(res => {
+                        if (res.status == 200) {
+                            const data = res.data.playlist;
+                            this.coverImg = data.coverImgUrl;
+                            this.creator = data.creator.nickname;
+                            this.creatorIcon = data.creator.avatarUrl;
+                            this.date = this.getDate(new Date(data.createTime));
+                            this.getSongs(data.trackIds.map(item => item.id));
+                        }
+                        else {
+                            this.error = true;
+                        }
+                    })
+                    .catch(() => {
+                        this.error = true;
+                    })
+            }
+        },
+        reload() {
+            this.isTableAlive = false;
+            this.$nextTick(function () {
+                this.isTableAlive = true;
+            });
         },
     },
     components: { loading },
     created() {
-        const id = this.$route.params.id;
-        this.title = this.$route.params.name;
-        if (id == "favorite") {
-            this.creator = "自己";
-            this.canSave = false;
-            this.getSongs(JSON.parse(localStorage.getItem("favorite") || "[]"));
-        }
-        else {
-            this.canSave = true;
-            const storage = JSON.parse(localStorage.getItem("savedPlayList") || "[]");
-            if (storage.includes(id)) {
-                this.saved = true;
-            }
-            else {
-                this.saved = false;
-            }
-            window.$axios
-                .get("/playlist/detail?id=" + id)
-                .then(res => {
-                    if (res.status == 200) {
-                        const data = res.data.playlist;
-                        this.coverImg = data.coverImgUrl;
-                        this.creator = data.creator.nickname;
-                        this.creatorIcon = data.creator.avatarUrl;
-                        this.date = this.getDate(new Date(data.createTime));
-                        this.getSongs(data.trackIds.map(item => item.id));
-                    }
-                    else {
-                        this.error = true;
-                    }
-                })
-                .catch(() => {
-                    this.error = true;
-                })
-            this.creator = ""; // todo
-        }
+        this.init();
     },
+    beforeRouteUpdate(to, from, next) {
+        this.error = false;
+        this.onLoad = false;
+        this.songs = [];
+        this.songsLib = [];
+        this.title = "歌单"
+        this.date = "2021-3-22";
+        this.creator = "???";
+        this.creatorIcon = creatorIcon;
+        this.coverImg = coverImg;
+        this.inputKey = "搜索歌单音乐";
+        this.favoriteList = false;
+        this.init(to.params.id, to.params.name);
+        next();
+    }
 }

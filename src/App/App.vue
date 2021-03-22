@@ -35,7 +35,7 @@
       </nav>
       <article>
         <el-scrollbar class="scrollBar" style="height: 100%, width:100%">
-          <router-view class="content"></router-view>
+          <router-view class="content" @reloadList="reloadList"></router-view>
         </el-scrollbar>
       </article>
     </div>

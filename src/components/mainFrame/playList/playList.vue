@@ -31,7 +31,7 @@
             class="saved"
             :disabled="!canSave"
             :style="getSavedBtnStyle()"
-            :click="savePlayList"
+            @click="savePlayList"
           >
             <i :class="getSavedBtnIcon()"></i>
             {{ getSavedBtnWord() }}
@@ -82,7 +82,7 @@
               :id="scope.row.id"
               :class="checkFavorite(scope) + ' ' + `favorite`"
               :style="{ color: checkFavorite(scope, true) }"
-              @click="unFavorite(scope)"
+              @click="favorite(scope)"
             ></i>
           </template>
         </el-table-column>

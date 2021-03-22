@@ -57,8 +57,12 @@ export default {
     },
     loadSavedPlayList() {
       const storage = JSON.parse(localStorage.getItem("savedPlayList") || "[]");
-      if (storage.length > 0)
+      if (storage.length > 0) {
         this.navData[2].children = storage;
+      }
+      else {
+        this.navData[2].children = [{ label: "暂无歌单", icon: false, route: false }];
+      }
       // localStorage.setItem("savedPlayList", JSON.stringify(storage));
     },
     route(data) {
@@ -72,8 +76,12 @@ export default {
       }
       // 其他
       else if (data.route !== false) {
-        console.log(data);
+        this.$router.push(`/playList/${data.id}/${data.label}`);
       }
+    },
+    reloadList() {
+      this.loadCreatedPlayList();
+      this.loadSavedPlayList();
     },
   },
   components: {
