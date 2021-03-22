@@ -83,7 +83,7 @@ export default {
         formatArtist(arr) {
             let artist = "";
             for (const item of arr) {
-                if (artist.length > 0) artist += "/"
+                if (artist.length > 0) artist += " / "
                 artist += item.name;
             }
             return artist;

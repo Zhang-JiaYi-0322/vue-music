@@ -188,7 +188,7 @@ export default {
         artistFormatter(e) {
             let artists = "";
             for (const artist of e.artists) {
-                if (artists.length != 0) artists += "/";
+                if (artists.length != 0) artists += " / ";
                 artists += artist.name;
             }
             return artists;

@@ -46,8 +46,8 @@ export default {
       return style;
     },
     labelFormatter: function (text) {
-      if (text.length > 12) {
-        text = text.slice(0, 13) + "...";
+      if (text.length > 9) {
+        text = text.slice(0, 10) + "...";
       }
       return text;
     },
