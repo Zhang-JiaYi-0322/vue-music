@@ -7,13 +7,14 @@ export default {
             error: false,
             onLoad: false,
             songs: [],
+            songsLib: [],
             title: "歌单",
             creator: "???",
             creatorIcon: require("../../../assets/logo.png"),
             canSave: true,
             saved: false,
             date: "2021-3-22",
-            coverImg: require("../../../assets/logo.png"),
+            coverImg: require("../../../assets/AppLogo.png"),
             inputKey: "搜索歌单音乐",
         }
     },
@@ -26,7 +27,7 @@ export default {
                             .then(res => {
                                 if (res.status == 200) {
                                     const data = res.data.songs[0];
-                                    this.songs.push({
+                                    this.songsLib.push({
                                         id,
                                         img: data.al.picUrl,
                                         name: data.name,
@@ -47,6 +48,7 @@ export default {
                 });
             }, Promise.resolve())
                 .then(() => {
+                    this.songs = this.songsLib;
                     this.onLoad = true;
                 });
         },
@@ -95,6 +97,17 @@ export default {
                 return "已收藏";
             }
         },
+        search() {
+            this.songs = [];
+            this.songsLib.map(song => {
+                const index1 = song.name.indexOf(this.inputKey);
+                const index2 = song.artist.indexOf(this.inputKey);
+                const index3 = song.album.indexOf(this.inputKey);
+                if (index1 > -1 || index2 > -1 || index3 > -1) {
+                    this.songs.push(song);
+                }
+            });
+        },
         searchFocus() {
             this.inputKey = "";
         },
@@ -128,6 +141,11 @@ export default {
             }
             localStorage.setItem("favorite", JSON.stringify(favorite));
         },
+        songClick(row, column, cell, event) {
+            if (event.path[0].nodeName != "I") {
+                console.log(row, column);
+            }
+        }
     },
     components: { loading },
     created() {

@@ -48,21 +48,33 @@
           <input
             class="input"
             type="text"
-            :value="inputKey"
+            v-model="inputKey"
             @focus="searchFocus"
             @blur="searchBlur"
+            @keyup="search"
           />
           <i class="el-icon-search"></i>
         </div>
       </div>
       <el-table
+        class="table"
         :data="songs"
         style="width: 100%"
         :default-sort="{ prop: '', order: 'descending' }"
+        @cell-click="songClick"
       >
+        <!-- 占位 -->
         <el-table-column prop="" label="" width="20"></el-table-column>
-        <el-table-column prop="" label="" width="50" type="index" :index="formatIndex">
+        <!-- index -->
+        <el-table-column
+          prop=""
+          label=""
+          width="50"
+          type="index"
+          :index="formatIndex"
+        >
         </el-table-column>
+        <!-- favorite -->
         <el-table-column prop="" label="" width="70">
           <template #default="scope">
             <i
@@ -73,6 +85,7 @@
             ></i>
           </template>
         </el-table-column>
+        <!-- 音乐标题 -->
         <el-table-column
           prop="name"
           label="音乐标题"
@@ -81,6 +94,7 @@
           :show-overflow-tooltip="true"
         >
         </el-table-column>
+        <!-- 歌手 -->
         <el-table-column
           prop="artist"
           label="歌手"
@@ -89,11 +103,11 @@
           :show-overflow-tooltip="true"
         >
         </el-table-column>
+        <!-- 专辑 -->
         <el-table-column
           prop="album"
           label="专辑"
           sortable
-          :formatter="formatter"
           :show-overflow-tooltip="true"
         >
         </el-table-column>

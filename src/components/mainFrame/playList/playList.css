@@ -10,6 +10,7 @@
   border-radius: 10px;
   border: 1px solid lightskyblue;
   margin: 0 20px 0 30px;
+  background-color: black;
 }
 .playList .head .content {
   height: 184px;
@@ -128,4 +129,7 @@
   position: absolute;
   top: 6px;
   right: 7px;
+}
+.playList .body .table {
+  color: #666 !important;
 }
