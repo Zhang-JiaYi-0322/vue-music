@@ -166,7 +166,7 @@
           :show-header="false"
           :row-style="{ height: '80px', overflow: 'hidden' }"
           cell-class-name="cell"
-          @row-click="albumClick"
+          @row-click="playListClick"
         >
           <el-table-column
             class-name="column"

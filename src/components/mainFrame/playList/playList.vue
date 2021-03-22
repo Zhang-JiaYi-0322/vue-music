@@ -31,6 +31,7 @@
             class="saved"
             :disabled="!canSave"
             :style="getSavedBtnStyle()"
+            :click="savePlayList"
           >
             <i :class="getSavedBtnIcon()"></i>
             {{ getSavedBtnWord() }}

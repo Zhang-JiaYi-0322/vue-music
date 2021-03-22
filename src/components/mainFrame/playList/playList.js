@@ -19,38 +19,63 @@ export default {
         }
     },
     methods: {
-        getFavoriteSongs(list) {
-            list.reduce((pre, id) => {
-                return pre.then(() => {
-                    return new Promise((resolve, reject) => {
-                        window.$axios.get("/song/detail?ids=" + id)
-                            .then(res => {
-                                if (res.status == 200) {
-                                    const data = res.data.songs[0];
-                                    this.songsLib.push({
-                                        id,
-                                        img: data.al.picUrl,
-                                        name: data.name,
-                                        artist: this.formatArtist(data.ar),
-                                        duration: this.formatDuration(data.dt),
-                                        album: data.al.name
-                                    });
-                                    resolve();
-                                }
-                                else {
-                                    reject();
-                                }
-                            })
-                            .catch(() => {
-                                this.error = true;
+        getSongs(list) {
+            // 顺序请求歌曲信息，当歌单列表较长时延迟明显
+            // list.reduce((pre, id) => {
+            //     return pre.then(() => {
+            //         return new Promise((resolve, reject) => {
+            //             window.$axios.get("/song/detail?ids=" + id)
+            //                 .then(res => {
+            //                     if (res.status == 200) {
+            //                         const data = res.data.songs[0];
+            //                         this.songsLib.push({
+            //                             id,
+            //                             img: data.al.picUrl,
+            //                             name: data.name,
+            //                             artist: this.formatArtist(data.ar),
+            //                             duration: this.formatDuration(data.dt),
+            //                             album: data.al.name
+            //                         });
+            //                         resolve();
+            //                     }
+            //                     else {
+            //                         reject();
+            //                     }
+            //                 })
+            //                 .catch(() => {
+            //                     this.error = true;
+            //                 });
+            //         })
+            //     });
+            // }, Promise.resolve())
+            //     .then(() => {
+            //         this.songs = this.songsLib;
+            //         this.onLoad = true;
+            //     });
+            const self = this;
+            window.$axios
+                .all(list.map(id => window.$axios.get("/song/detail?ids=" + id)))
+                .then(window.$axios.spread(function () {
+                    for (const res of arguments) {
+                        if (res.status == 200) {
+                            const data = res.data.songs[0];
+                            self.songsLib.push({
+                                id: data.id,
+                                img: data.al.picUrl,
+                                name: data.name,
+                                artist: self.formatArtist(data.ar),
+                                duration: self.formatDuration(data.dt),
+                                album: data.al.name
                             });
-                    })
-                });
-            }, Promise.resolve())
-                .then(() => {
-                    this.songs = this.songsLib;
-                    this.onLoad = true;
-                });
+                        }
+                        else {
+                            self.error = true;
+                            break;
+                        }
+                    }
+                    self.songs = self.songsLib;
+                    self.onLoad = true;
+                }))
         },
         formatArtist(arr) {
             let artist = "";
@@ -67,7 +92,7 @@ export default {
             return `${mm}:${ss}`;
         },
         formatIndex(index) {
-            index = index.toString();
+            index = (++index).toString();
             if (index.length < 2) {
                 index = "0" + index;
             }
@@ -145,20 +170,68 @@ export default {
             if (event.path[0].nodeName != "I") {
                 console.log(row, column);
             }
-        }
+        },
+        savePlayList() {
+            let storage = JSON.parse(localStorage.getItem("savedPlayList") || "[]");
+            if (!this.saved) {
+                storage.push({ id: this.$route.params.id, label: this.title });
+                this.saved = true;
+            }
+            else {
+                for (let i = 0; i < storage.length; i++) {
+                    if (storage[i].id == this.$route.params.id) {
+                        storage.splice(i, 1);
+                        localStorage.setItem("savedPlayList", JSON.stringify(storage));
+                        this.saved = false;
+                        break;
+                    }
+                }
+            }
+        },
+        getDate(time) {
+            const yyyy = time.getFullYear();
+            const mm = (time.getMonth() + 1).toString().padStart(2, "0");
+            const dd = time.getDay().toString().padStart(2, "0");
+            return `${yyyy}-${mm}-${dd}`;
+        },
     },
     components: { loading },
     created() {
+        const id = this.$route.params.id;
         this.title = this.$route.params.name;
-        if (this.$route.params.id == "favorite") {
+        if (id == "favorite") {
             this.creator = "自己";
             this.canSave = false;
-            this.getFavoriteSongs(JSON.parse(localStorage.getItem("favorite") || "[]"));
+            this.getSongs(JSON.parse(localStorage.getItem("favorite") || "[]"));
         }
         else {
-            this.creator = ""; // todo
             this.canSave = true;
-            this.saved = true;
+            const storage = JSON.parse(localStorage.getItem("savedPlayList") || "[]");
+            if (storage.includes(id)) {
+                this.saved = true;
+            }
+            else {
+                this.saved = false;
+            }
+            window.$axios
+                .get("/playlist/detail?id=" + id)
+                .then(res => {
+                    if (res.status == 200) {
+                        const data = res.data.playlist;
+                        this.coverImg = data.coverImgUrl;
+                        this.creator = data.creator.nickname;
+                        this.creatorIcon = data.creator.avatarUrl;
+                        this.date = this.getDate(new Date(data.createTime));
+                        this.getSongs(data.trackIds.map(item => item.id));
+                    }
+                    else {
+                        this.error = true;
+                    }
+                })
+                .catch(() => {
+                    this.error = true;
+                })
+            this.creator = ""; // todo
         }
     },
 }

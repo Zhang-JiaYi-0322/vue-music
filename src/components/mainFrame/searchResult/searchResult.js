@@ -247,6 +247,9 @@ export default {
         albumClick(row) {
             console.log(row);
         },
+        playListClick(row) {
+            this.$router.push(`/playList/${row.id}/${row.name}`);
+        }
     },
     computed: {},
     components: { loading },
