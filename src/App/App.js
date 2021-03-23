@@ -68,7 +68,7 @@ export default {
     route(data) {
       // 发现音乐
       if (data.id == "foundMusic") {
-        console.log(data);
+        this.$router.push("/foundMusic");
       }
       // 我喜欢的音乐
       else if (data.id == "favorite") {

@@ -52,3 +52,13 @@ li.active {
   color       : rgb(167, 165, 165);
   padding-left: 0px !important;
 }
+
+.el-carousel__button {
+  width        : 10px;
+  height       : 10px;
+  border-radius: 50%;
+}
+
+.is-active .el-carousel__button {
+  background-color: rgb(236, 65, 65) !important;
+}

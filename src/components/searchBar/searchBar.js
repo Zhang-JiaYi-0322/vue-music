@@ -28,8 +28,7 @@ export default {
       this.searchFocus = true;
       this.searchKey = "";
     },
-    loseFocus(e) {
-      console.log(e);
+    loseFocus() {
       if (!this.onContent) {
         // this.$router.push("/searchResult/" + this.searchKey);
         this.searchFocus = false;
