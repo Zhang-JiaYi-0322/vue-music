@@ -1,0 +1,97 @@
+.musicBar {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+.musicBar .info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+.musicBar .info .icon {
+  background-color: #666;
+  width: 45px;
+  height: 45px;
+  margin-right: 10px;
+  border-radius: 3px;
+}
+.musicBar .info .rows {
+  color: #666;
+}
+.musicBar .info .rows .title {
+  margin-top: 2px;
+  display: block;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  color: black;
+}
+.musicBar .info .rows .artist {
+  font-size: 14px;
+}
+.musicBar .controller {
+  flex: 1;
+}
+.musicBar .controller .button {
+  position: relative;
+  top: 15px;
+  height: 50%;
+  text-align: center;
+}
+.musicBar .controller .button .btn {
+  display: inline-block;
+  margin: 0 20px;
+  width: 15px;
+  height: 15px;
+}
+.musicBar .controller .button .btn:hover {
+  color: #ec4141;
+}
+.musicBar .controller .button .playBackground {
+  display: inline-block;
+  position: relative;
+  transform: translateY(-5px);
+  background-color: #ebebed;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin: 0 15px;
+}
+.musicBar .controller .button .playBackground:hover {
+  background-color: #ddddde;
+}
+.musicBar .controller .button .playBackground .play {
+  transform: translate(-11px, 5px) scale(1.1);
+}
+.musicBar .controller .button .playBackground .play:hover {
+  color: black;
+}
+.musicBar .controller .button .favorite {
+  padding-top: 2.5px;
+  vertical-align: top;
+}
+.musicBar .controller .processBox {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+.musicBar .controller .processBox .process {
+  display: inline-block;
+  width: 370px;
+}
+.musicBar .controller .processBox span {
+  color: #c2c2c4;
+  font-size: 12px;
+}
+.musicBar .controller .processBox .playedTime {
+  margin-right: 15px;
+}
+.musicBar .controller .processBox .duration {
+  margin-left: 15px;
+}
+.musicBar .btn {
+  flex: 1;
+}

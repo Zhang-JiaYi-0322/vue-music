@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import axios from "axios";
-import { ElButton, ElScrollbar, ElTabs, ElTabPane, ElTable, ElLoading, ElTableColumn, ElPagination, ElTree,ElCarousel,ElCarouselItem } from 'element-plus';
+import { ElButton, ElScrollbar, ElTabs, ElTabPane, ElTable, ElLoading, ElTableColumn, ElPagination, ElTree, ElCarousel, ElCarouselItem, ElSlider } from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 import App from './App/App.vue';
 
@@ -25,5 +25,6 @@ app.component(ElPagination.name, ElPagination);
 app.component(ElTree.name, ElTree);
 app.component(ElCarousel.name, ElCarousel);
 app.component(ElCarouselItem.name, ElCarouselItem);
+app.component(ElSlider.name, ElSlider);
 
 app.mount('#app');

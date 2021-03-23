@@ -17,9 +17,6 @@ export default {
             else if (target.song) {
                 console.log(target.song);
             }
-            else {
-                console.log(target);
-            }
         },
         playListClick(target) {
             this.$router.push(`/playList/${target.id}/${target.name}`);
@@ -35,7 +32,6 @@ export default {
                 if (a.status == 200 && b.status == 200) {
                     self.banner = a.data.data.blocks[0].extInfo.banners;
                     self.playList = b.data.result;
-                    console.log(a.data.data.blocks[0].extInfo.banners);
                     self.onLoad = true;
                 }
                 else {

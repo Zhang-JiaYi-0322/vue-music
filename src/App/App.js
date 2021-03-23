@@ -1,4 +1,5 @@
 import search from "../components/searchBar/searchBar.vue";
+import music from "../components/musicBar/musicBar.vue";
 
 export default {
   name: "App",
@@ -86,6 +87,7 @@ export default {
   },
   components: {
     search,
+    music,
   },
   created() {
     this.loadCreatedPlayList();

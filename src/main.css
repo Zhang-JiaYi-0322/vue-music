@@ -62,3 +62,18 @@ li.active {
 .is-active .el-carousel__button {
   background-color: rgb(236, 65, 65) !important;
 }
+
+.el-slider__runway {
+  background-color: rgb(194, 194, 196);
+}
+
+.el-slider__button {
+  /* visibility: hidden; */
+  width : 10px;
+  height: 10px;
+  border-color: rgb(236, 65, 65);
+}
+
+.el-slider__bar {
+  background-color: rgb(236, 65, 65);
+}

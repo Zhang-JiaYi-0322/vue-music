@@ -40,7 +40,9 @@
       </article>
     </div>
     <!-- 底部播放器 -->
-    <footer>footer</footer>
+    <footer>
+      <music></music>
+    </footer>
   </div>
 </template>
 

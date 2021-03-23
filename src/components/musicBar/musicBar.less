@@ -1,0 +1,120 @@
+.musicBar {
+    display           : flex;
+    height            : 100%;
+    overflow          : hidden;
+    // justify-content: space-between;
+
+    .info {
+        flex       : 1;
+        display    : flex;
+        align-items: center;
+        margin-left: 10px;
+
+        .icon {
+            background-color: #666;
+            width           : 45px;
+            height          : 45px;
+            margin-right    : 10px;
+            border-radius   : 3px;
+        }
+
+        .rows {
+            color: #666;
+
+            .title {
+                margin-top       : 2px;
+                // vertical-align: middle;
+                display          : block;
+                max-width        : 200px;
+                white-space      : nowrap;
+                overflow         : hidden;
+                text-overflow    : ellipsis;
+                font-size        : 14px;
+                color            : black;
+            }
+
+            .artist {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .controller {
+        flex: 1;
+
+        .button {
+            position  : relative;
+            top       : 15px;
+            height    : 50%;
+            text-align: center;
+
+            .btn {
+                display: inline-block;
+                margin : 0 20px;
+                width  : 15px;
+                height : 15px;
+
+                &:hover {
+                    color: rgb(236, 65, 65);
+                }
+            }
+
+            .playBackground {
+                display         : inline-block;
+                position        : relative;
+                transform       : translateY(-5px);
+                background-color: rgb(235, 235, 237);
+                height          : 30px;
+                width           : 30px;
+                border-radius   : 50%;
+                margin: 0 15px;
+
+                &:hover {
+                    background-color: rgb(221, 221, 222);
+                }
+
+                .play {
+                    transform: translate(-11px, 5px) scale(1.1);
+
+                    &:hover {
+                        color: black;
+                    }
+                }
+            }
+
+            .favorite {
+                padding-top   : 2.5px;
+                vertical-align: top;
+            }
+        }
+
+        .processBox {
+            display    : flex;
+            position   : relative;
+            align-items: center;
+
+            .process {
+                display: inline-block;
+                width  : 370px;
+            }
+
+            span {
+                color    : rgb(194, 194, 196);
+                font-size: 12px;
+            }
+
+            .playedTime {
+                margin-right: 15px;
+            }
+
+            .duration {
+                margin-left: 15px;
+            }
+
+        }
+    }
+
+    .btn {
+        flex: 1;
+    }
+}
