@@ -69,11 +69,22 @@ li.active {
 
 .el-slider__button {
   /* visibility: hidden; */
-  width : 10px;
-  height: 10px;
+  width       : 10px;
+  height      : 10px;
   border-color: rgb(236, 65, 65);
 }
 
 .el-slider__bar {
   background-color: rgb(236, 65, 65);
+}
+
+.tableRow {
+  height   : 34px !important;
+  padding  : 0 !important;
+  font-size: 12px !important;
+
+}
+
+.tableRow * {
+  padding: 0 !important;
 }

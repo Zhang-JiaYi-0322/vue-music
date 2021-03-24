@@ -1,20 +1,26 @@
-let vm;
+const imgUrl = require("../../assets/AppLogo.png");
 
-vm = {
+
+const vm = {
     data() {
         return {
             playList: [
                 {
                     id: -1,
-                    imgUrl: require("../../assets/AppLogo.png"),
-                    title: "暂无音乐",
-                    artist: "artist",
+                    imgUrl,
+                    url: "",
+                    name: "暂无音乐",
+                    artist: "none",
+                    duration: -1,
+                    time: "--:--",
                     favorite: false,
                     favoriteAble: false,
                 }
             ],
+            playListId: [],
             index: 0,
             playedTime: 0,
+            // audio 绑定了 currentTime，如果使用 playedTime 会导致一帧播放两次
             currentTime: 0,
             lastTime: 0,
             duration: 240,
@@ -27,9 +33,9 @@ vm = {
                 "icon ion-navicon-round btn"
             ],
             playMode: 0,
-            sound: 50,
+            sound: 20,
             url: "",
-            helper: 0,
+            count: 0,
         }
     },
     methods: {
@@ -58,11 +64,9 @@ vm = {
             this.currentTime = e;
             this.formatTime();
         },
-        checkFavorite() {
-            const id = this.playList[this.index].id;
+        checkFavorite(id) {
             const favorite = JSON.parse(localStorage.getItem("favorite") || "[]");
-            const index = favorite.indexOf(id);
-            this.playList[this.index].favorite = index >= 0 ? true : false;
+            return favorite.indexOf(id) >= 0 ? true : false;
         },
         favorite() {
             const song = this.playList[this.index];
@@ -123,17 +127,77 @@ vm = {
                 this.formatTime();
             }
         },
+        isPlaying(id) {
+            // return this.playList[this.index].id === id
+            return this.playList[this.index].id === id && id !== -1;
+        },
+        clearPlayList() {
+            this.playList = [
+                {
+                    id: -1,
+                    imgUrl,
+                    url: "",
+                    name: "暂无音乐",
+                    artist: "none",
+                    duration: -1,
+                    time: "--:--",
+                    favorite: false,
+                    favoriteAble: false,
+                }
+            ];
+            this.playListId = [];
+            this.index = 0;
+            this.url = "";
+            this.count = 0;
+            this.playedTime = 0;
+            this.duration = 0;
+            this.formatTime();
+        },
+        addToList(obj) {
+            const self = this;
+            window.$axios.all([
+                window.$axios.get(`/song/url?id=${obj.id}&br=192000`),
+                window.$axios.get(`/album?id=${obj.albumId}`)
+            ]).then(window.$axios.spread(function (a, b) {
+                let music = null;
+                const index = self.playListId.indexOf(obj.id);
+                if (index >= 0) {
+                    music = self.playList.splice(index, 1);
+                    self.playListId.splice(index, 1);
+                }
+                else {
+                    const dataA = a.data.data[0];
+                    const dataB = b.data.album;
+                    music = obj;
+                    const time = music.duration / 60;
+                    const mm = Math.floor(time).toString().padStart(2, "0");
+                    const ss = Math.round((time - mm) * 60).toString().padStart(2, "0");
+                    music.time = `${mm}:${ss}`;
+                    music.favorite = self.checkFavorite(music.id);
+                    music.url = dataA.url;
+                    music.imgUrl = dataB.picUrl;
+                }
+                if (self.playList[0].id == -1) self.playList = [];
+                self.playList.unshift(music);
+                self.playListId.unshift(music.id);
+                self.count = self.playList.length;
+                self.setMusic(0);
+            }))
+        },
+        setMusic(index) {
+            this.index = index;
+            const music = this.playList[index];
+            this.url = music.url;
+            this.playedTime = 0;
+            this.currentTime = 0;
+            this.duration = music.duration;
+            this.formatTime();
+        },
     },
     created() {
+        window.addToList = this.addToList;
         this.formatTime();
-        // 最终决戦地
-        // /song/url?id=747800,33894312
-        window.$axios
-            .get('/song/url?id=747800&br=192000')
-            .then(res => {
-                this.url = res.data.data[0].url;
-                this.formatTime();
-            })
+        this.count = 0;
     },
     mounted() {
         const self = this;

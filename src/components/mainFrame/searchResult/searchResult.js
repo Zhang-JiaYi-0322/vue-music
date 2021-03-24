@@ -233,7 +233,14 @@ export default {
         },
         songClick(row, column, cell, event) {
             if (event.path[0].nodeName != "I") {
-                console.log("song click");
+                const obj = {
+                    id: row.id,
+                    name: row.name,
+                    artist: this.artistFormatter(row),
+                    duration: Math.floor(row.duration / 1000),
+                    albumId: row.album.id
+                }
+                window.addToList(obj);
             }
         },
         // 最佳匹配的歌手点击事件

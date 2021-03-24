@@ -27,7 +27,7 @@
             class="table"
             stripe
             style="width: 100%"
-            @cell-click="songClick"
+            @cell-dblclick="songClick"
             row-class-name="row"
           >
             <!-- 占位 -->
