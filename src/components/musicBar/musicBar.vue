@@ -62,7 +62,7 @@
           <el-slider class="soundSlider" v-model="sound"></el-slider>
         </div>
         <!-- list -->
-        <i class="el-icon-s-unfold list"></i>
+        <i class="el-icon-s-unfold list" @click="callList"></i>
       </div>
 
       <!-- audio -->
@@ -79,7 +79,7 @@
       ></audio>
     </div>
     <!-- 播放列表 -->
-    <div class="playList">
+    <div class="playList" v-if="showPlayList">
       <el-scrollbar class="scrollBar" style="height: 100%, width:100%">
         <span class="title">播放列表</span>
         <div class="row">
@@ -130,8 +130,8 @@
             </template>
           </el-table-column>
           <el-table-column prop="" label="" width="15"> </el-table-column>
-          <el-table-column prop="time" label="" width=""> </el-table-column>
-          <el-table-column prop="" label="" width="5"> </el-table-column>
+          <el-table-column prop="time" label="" width="35"> </el-table-column>
+          <!-- <el-table-column prop="" label="" width="5"> </el-table-column> -->
         </el-table>
       </el-scrollbar>
     </div>

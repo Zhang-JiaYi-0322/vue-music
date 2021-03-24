@@ -62,7 +62,7 @@
         :data="songs"
         style="width: 100%"
         :default-sort="{ prop: '', order: 'descending' }"
-        @cell-click="songClick"
+        @cell-dblclick="songClick"
       >
         <!-- 占位 -->
         <el-table-column prop="" label="" width="20"></el-table-column>

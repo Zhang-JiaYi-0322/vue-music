@@ -36,6 +36,7 @@ const vm = {
             sound: 20,
             url: "",
             count: 0,
+            showPlayList: false
         }
     },
     methods: {
@@ -162,7 +163,7 @@ const vm = {
                 let music = null;
                 const index = self.playListId.indexOf(obj.id);
                 if (index >= 0) {
-                    music = self.playList.splice(index, 1);
+                    music = self.playList.splice(index, 1)[0];
                     self.playListId.splice(index, 1);
                 }
                 else {
@@ -177,7 +178,7 @@ const vm = {
                     music.url = dataA.url;
                     music.imgUrl = dataB.picUrl;
                 }
-                if (self.playList[0].id == -1) self.playList = [];
+                if (self.playList[0] && self.playList[0].id == -1) self.playList = [];
                 self.playList.unshift(music);
                 self.playListId.unshift(music.id);
                 self.count = self.playList.length;
@@ -190,9 +191,13 @@ const vm = {
             this.url = music.url;
             this.playedTime = 0;
             this.currentTime = 0;
+            this.$refs["audio"].currentTime = 0;
             this.duration = music.duration;
             this.formatTime();
         },
+        callList() {
+            this.showPlayList = !this.showPlayList;
+        }
     },
     created() {
         window.addToList = this.addToList;

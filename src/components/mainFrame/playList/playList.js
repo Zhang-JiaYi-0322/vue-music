@@ -68,7 +68,9 @@ export default {
                                 name: data.name,
                                 artist: self.formatArtist(data.ar),
                                 duration: self.formatDuration(data.dt),
-                                album: data.al.name
+                                album: data.al.name,
+                                albumId: data.al.id,
+                                totalTime: data.dt
                             });
                         }
                         else {
@@ -189,7 +191,14 @@ export default {
         },
         songClick(row, column, cell, event) {
             if (event.path[0].nodeName != "I") {
-                console.log(row, column);
+                const obj = {
+                    id: row.id,
+                    name: row.name,
+                    artist: row.artist,
+                    duration: Math.floor(row.totalTime / 1000),
+                    albumId: row.albumId
+                }
+                window.addToList(obj);
             }
         },
         savePlayList() {
