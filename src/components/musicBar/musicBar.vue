@@ -38,22 +38,40 @@
           color="rgb(236, 65, 65)"
           :show-tooltip="false"
           :max="duration"
-          :format-tooltip="valueChange"
+          @change="timeChange"
         ></el-slider>
+          <!-- :format-tooltip="formatTime" -->
         <span class="duration">{{ durationString }}</span>
       </div>
     </div>
     <div class="btn">
       <!-- 音量 -->
       <div class="sound">
-        <i class="icon ion-android-volume-down soundIcon"></i>
+        <i
+          :class="
+            sound == 0
+              ? `icon ion-android-volume-mute soundIcon`
+              : `icon ion-android-volume-down soundIcon`
+          "
+          @click="soundClick"
+        ></i>
         <el-slider class="soundSlider" v-model="sound"></el-slider>
       </div>
       <!-- list -->
-      <i class="el-icon-s-unfold"></i>
+      <i class="el-icon-s-unfold list"></i>
     </div>
+    <audio
+      ref="audio"
+      class="audio"
+      :src="url"
+      autoplay
+      controls
+      :currentTime="currentTime"
+      :volume="sound / 100"
+      @timeupdate="timeupdate"
+    ></audio>
   </div>
-</template>
+</template> 
 
 <script src="./musicBar.js"></script>
 

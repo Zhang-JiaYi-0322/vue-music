@@ -84,10 +84,33 @@
 .musicBar .controller .processBox .duration {
   margin-left: 15px;
 }
+.musicBar .btn {
+  position: relative;
+  margin-top: 4px;
+  margin-right: 10px;
+}
 .musicBar .btn .sound {
   display: inline-block;
+  height: 66px;
+  line-height: 66px;
+}
+.musicBar .btn .sound .soundIcon {
+  display: inline-block;
+  font-size: 25px;
+  width: 25px;
+  height: 25px;
 }
 .musicBar .btn .sound .soundSlider {
+  position: relative;
+  top: 9px;
   display: inline-block;
-  width: 100px;
+  width: 70px;
+  margin: 0 20px 0 10px;
+}
+.musicBar .btn .list {
+  font-size: 25px;
+}
+.musicBar .audio {
+  position: absolute;
+  visibility: hidden;
 }

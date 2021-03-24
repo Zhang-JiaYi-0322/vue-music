@@ -1,4 +1,6 @@
-const vm = {
+let vm;
+
+vm = {
     data() {
         return {
             playList: [
@@ -13,7 +15,9 @@ const vm = {
             ],
             index: 0,
             playedTime: 0,
-            duration: 0,
+            currentTime: 0,
+            lastTime: 0,
+            duration: 240,
             playedTimeString: "00:00",
             durationString: "--:--",
             playing: false,
@@ -24,6 +28,8 @@ const vm = {
             ],
             playMode: 0,
             sound: 50,
+            url: "",
+            helper: 0,
         }
     },
     methods: {
@@ -47,8 +53,9 @@ const vm = {
                 this.durationString = `${mm}:${ss}`;
             }
         },
-        valueChange(e) {
+        timeChange(e) {
             this.playedTime = e;
+            this.currentTime = e;
             this.formatTime();
         },
         checkFavorite() {
@@ -74,9 +81,15 @@ const vm = {
             }
         },
         changePlayState() {
-            if (this.playList[this.index].id != -1) {
-                this.playing = !this.playing;
+            // if (this.playList[this.index].id != -1) {
+            if (this.playing) {
+                this.$refs["audio"].pause();
             }
+            else {
+                this.$refs["audio"].play();
+            }
+            this.playing = !this.playing;
+            // }
         },
         skipPlay(direction) {
             if (this.playList[0].id != -1) {
@@ -94,11 +107,41 @@ const vm = {
                 this.playMode = 0;
             }
         },
-
+        soundClick() {
+            if (this.sound > 0) {
+                this.sound = 0;
+            }
+            else {
+                this.sound = 40;
+            }
+        },
+        timeupdate(e) {
+            const time = Math.round(e.target.currentTime);
+            if (this.lastTime != time) {
+                this.playedTime = time;
+                this.lastTime = time;
+                this.formatTime();
+            }
+        },
     },
     created() {
         this.formatTime();
+        // 最终决戦地
+        // /song/url?id=747800,33894312
+        window.$axios
+            .get('/song/url?id=747800&br=192000')
+            .then(res => {
+                this.url = res.data.data[0].url;
+                this.formatTime();
+            })
+    },
+    mounted() {
+        const self = this;
+        this.$refs["audio"].addEventListener("play", function () {
+            self.playing = true;
+        });
     },
 };
 
 export default vm;
+

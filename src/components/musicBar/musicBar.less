@@ -108,19 +108,39 @@
     }
 
     .btn {
-        // flex: 1;
+        position    : relative;
+        margin-top  : 4px;
+        margin-right: 10px;
 
         .sound {
-            display: inline-block;
+            display    : inline-block;
+            height     : 66px;
+            line-height: 66px;
 
             .soundIcon {
-                // display: inline-block;
+                display     : inline-block;
+                // position : relative;
+                font-size   : 25px;
+                width       : 25px;
+                height      : 25px;
             }
 
             .soundSlider {
-                display: inline-block;
-                width  : 100px;
+                position: relative;
+                top     : 9px;
+                display : inline-block;
+                width   : 70px;
+                margin  : 0 20px 0 10px;
             }
         }
+
+        .list {
+            font-size: 25px;
+        }
+    }
+
+    .audio {
+        position  : absolute;
+        visibility: hidden;
     }
 }
