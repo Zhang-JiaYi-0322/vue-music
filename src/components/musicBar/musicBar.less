@@ -1,11 +1,11 @@
 .musicBar {
-    display           : flex;
-    height            : 100%;
-    overflow          : hidden;
-    // justify-content: space-between;
+    display        : flex;
+    height         : 100%;
+    overflow       : hidden;
+    justify-content: space-between;
 
     .info {
-        flex       : 1;
+        // flex       : 1;
         display    : flex;
         align-items: center;
         margin-left: 10px;
@@ -40,17 +40,19 @@
     }
 
     .controller {
-        flex: 1;
+        // flex: 1;
 
         .button {
-            position  : relative;
-            top       : 15px;
-            height    : 50%;
-            text-align: center;
+            position      : relative;
+            top           : 10px;
+            height        : 50%;
+            text-align    : center;
+            box-sizing    : border-box;
+            padding-bottom: 10px;
 
             .btn {
                 display: inline-block;
-                margin : 0 20px;
+                margin : 0 1vw;
                 width  : 15px;
                 height : 15px;
 
@@ -59,31 +61,22 @@
                 }
             }
 
-            .playBackground {
-                display         : inline-block;
-                position        : relative;
-                transform       : translateY(-5px);
-                background-color: rgb(235, 235, 237);
-                height          : 30px;
+            .play {
+                box-sizing      : border-box;
                 width           : 30px;
+                height          : 30px;
+                background-color: rgb(235, 235, 237);
                 border-radius   : 50%;
-                margin: 0 15px;
+                padding-top     : 5px;
 
                 &:hover {
+                    color           : black;
                     background-color: rgb(221, 221, 222);
-                }
-
-                .play {
-                    transform: translate(-11px, 5px) scale(1.1);
-
-                    &:hover {
-                        color: black;
-                    }
                 }
             }
 
             .favorite {
-                padding-top   : 2.5px;
+                padding-top   : 8px;
                 vertical-align: top;
             }
         }
@@ -95,7 +88,7 @@
 
             .process {
                 display: inline-block;
-                width  : 370px;
+                width  : 30vw;
             }
 
             span {
@@ -115,6 +108,19 @@
     }
 
     .btn {
-        flex: 1;
+        // flex: 1;
+
+        .sound {
+            display: inline-block;
+
+            .soundIcon {
+                // display: inline-block;
+            }
+
+            .soundSlider {
+                display: inline-block;
+                width  : 100px;
+            }
+        }
     }
 }

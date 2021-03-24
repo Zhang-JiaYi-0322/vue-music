@@ -2,9 +2,9 @@
   display: flex;
   height: 100%;
   overflow: hidden;
+  justify-content: space-between;
 }
 .musicBar .info {
-  flex: 1;
   display: flex;
   align-items: center;
   margin-left: 10px;
@@ -32,45 +32,37 @@
 .musicBar .info .rows .artist {
   font-size: 14px;
 }
-.musicBar .controller {
-  flex: 1;
-}
 .musicBar .controller .button {
   position: relative;
-  top: 15px;
+  top: 10px;
   height: 50%;
   text-align: center;
+  box-sizing: border-box;
+  padding-bottom: 10px;
 }
 .musicBar .controller .button .btn {
   display: inline-block;
-  margin: 0 20px;
+  margin: 0 1vw;
   width: 15px;
   height: 15px;
 }
 .musicBar .controller .button .btn:hover {
   color: #ec4141;
 }
-.musicBar .controller .button .playBackground {
-  display: inline-block;
-  position: relative;
-  transform: translateY(-5px);
-  background-color: #ebebed;
-  height: 30px;
+.musicBar .controller .button .play {
+  box-sizing: border-box;
   width: 30px;
+  height: 30px;
+  background-color: #ebebed;
   border-radius: 50%;
-  margin: 0 15px;
+  padding-top: 5px;
 }
-.musicBar .controller .button .playBackground:hover {
+.musicBar .controller .button .play:hover {
+  color: black;
   background-color: #ddddde;
 }
-.musicBar .controller .button .playBackground .play {
-  transform: translate(-11px, 5px) scale(1.1);
-}
-.musicBar .controller .button .playBackground .play:hover {
-  color: black;
-}
 .musicBar .controller .button .favorite {
-  padding-top: 2.5px;
+  padding-top: 8px;
   vertical-align: top;
 }
 .musicBar .controller .processBox {
@@ -80,7 +72,7 @@
 }
 .musicBar .controller .processBox .process {
   display: inline-block;
-  width: 370px;
+  width: 30vw;
 }
 .musicBar .controller .processBox span {
   color: #c2c2c4;
@@ -92,6 +84,10 @@
 .musicBar .controller .processBox .duration {
   margin-left: 15px;
 }
-.musicBar .btn {
-  flex: 1;
+.musicBar .btn .sound {
+  display: inline-block;
+}
+.musicBar .btn .sound .soundSlider {
+  display: inline-block;
+  width: 100px;
 }
