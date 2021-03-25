@@ -228,21 +228,25 @@
   top: 58px;
   bottom: 70px;
   width: 100%;
-  background-color: burlywood;
+  background-color: #fff;
   overflow: auto;
   z-index: 777;
-  display: flex;
   overflow: hidden;
 }
-.playFrame .left {
-  width: 50%;
-  min-width: 410px;
+.playFrame .box {
+  display: flex;
+  width: 100%;
   height: 100%;
+  min-width: 1396px;
+  min-height: 557px;
+}
+.playFrame .box .left {
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.playFrame .left .backImg {
+.playFrame .box .left .backImg {
   width: 410px;
   height: 410px;
   background-image: url('../../assets/coverall.png');
@@ -252,7 +256,7 @@
   justify-content: center;
   align-items: center;
 }
-.playFrame .left .backImg .cover {
+.playFrame .box .left .backImg .cover {
   background-color: black;
   width: 263px;
   height: 263px;
@@ -260,47 +264,75 @@
   margin-top: -2px;
   border-radius: 50%;
 }
-.playFrame .left [playing=true] {
+.playFrame .box .left [playing=true] {
   animation-name: roll;
   animation-duration: 5s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-.playFrame .left [pause=true] {
+.playFrame .box .left [pause=true] {
   animation-play-state: paused;
 }
-.playFrame .right {
+.playFrame .box .right {
   padding-left: 50px;
   padding-top: 30px;
 }
-.playFrame .right .title {
+.playFrame .box .right .title {
   font-weight: 400;
   font-size: 28px;
   margin-bottom: 16px;
 }
-.playFrame .right .info .album {
+.playFrame .box .right .info .album {
   display: inline-block;
   width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.playFrame .right .info .artist {
+.playFrame .box .right .info .artist {
   display: inline-block;
   width: 200px;
-  margin-left: 30px;
+  margin-left: 20px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.playFrame .right .lyric {
+.playFrame .box .right .lyric {
   width: 100%;
   height: 350px;
-  margin-top: 20px;
+  margin-top: 40px;
   margin-bottom: 20px;
   overflow: hidden;
 }
-.playFrame .right .lyric .scrollBar .test {
-  height: 900px;
+.playFrame .box .right .lyric .scrollBar {
+  border-right: 1px solid #e9e9eb;
+}
+.playFrame .box .right .lyric .scrollBar .word {
+  display: block;
   width: 100%;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  color: #707070;
+  text-align: left;
+}
+.playFrame .box .right .lyric .no {
+  display: block;
+  height: 100%;
+  text-align: center;
+  margin-top: 20%;
+}
+.v-enter-from,
+.v-leave-to {
+  transform: translate(-50%, 60%) scale(0.01);
+  opacity: 0;
+}
+.v-enter-to,
+.v-leave-from {
+  transform: translate(0, 0) scale(1);
+  opacity: 1;
+}
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.2s ease;
 }

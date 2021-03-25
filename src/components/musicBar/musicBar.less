@@ -57,10 +57,10 @@
             }
 
             .icon {
-                background-color   : #666;
-                width              : 45px;
-                height             : 45px;
-                position           : relative;
+                background-color: #666;
+                width           : 45px;
+                height          : 45px;
+                position        : relative;
             }
         }
 
@@ -280,95 +280,133 @@
     top             : 58px;
     bottom          : 70px;
     width           : 100%;
-    background-color: burlywood;
+    background-color: #fff;
     overflow        : auto;
     z-index         : 777;
-    display         : flex;
     overflow        : hidden;
 
-    .left {
-        width          : 50%;
-        min-width      : 410px;
-        height         : 100%;
-        display        : flex;
-        justify-content: center;
-        align-items    : center;
 
-        .backImg {
-            // margin-left        : 20px;
-            width              : 410px;
-            height             : 410px;
-            background-image   : url('../../assets/coverall.png');
-            background-position: -285px -1161px;
-            background-size    : 760px;
-            display            : flex;
-            justify-content    : center;
-            align-items        : center;
+    .box {
+        display   : flex;
+        width     : 100%;
+        height    : 100%;
+        min-width : 1396px;
+        min-height: 557px;
 
-            .cover {
-                background-color: black;
-                width           : 263px;
-                height          : 263px;
-                margin-left     : -8px;
-                margin-top      : -2px;
-                border-radius   : 50%;
+        .left {
+            width          : 50%;
+            display        : flex;
+            justify-content: center;
+            align-items    : center;
+
+            .backImg {
+                // margin-left        : 20px;
+                width              : 410px;
+                height             : 410px;
+                background-image   : url('../../assets/coverall.png');
+                background-position: -285px -1161px;
+                background-size    : 760px;
+                display            : flex;
+                justify-content    : center;
+                align-items        : center;
+
+                .cover {
+                    background-color: black;
+                    width           : 263px;
+                    height          : 263px;
+                    margin-left     : -8px;
+                    margin-top      : -2px;
+                    border-radius   : 50%;
+                }
+            }
+
+            [playing=true] {
+                animation-name           : roll;
+                animation-duration       : 5s;
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
+            }
+
+            [pause=true] {
+                animation-play-state: paused;
             }
         }
 
-        [playing=true] {
-            animation-name           : roll;
-            animation-duration       : 5s;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-        }
+        .right {
+            padding-left: 50px;
+            padding-top : 30px;
 
-        [pause=true] {
-            animation-play-state: paused;
-        }
-    }
+            .title {
+                font-weight  : 400;
+                font-size    : 28px;
+                margin-bottom: 16px;
+            }
 
-    .right {
-        padding-left: 50px;
-        padding-top : 30px;
+            .info {
+                .album {
+                    display      : inline-block;
+                    width        : 200px;
+                    white-space  : nowrap;
+                    overflow     : hidden;
+                    text-overflow: ellipsis;
+                }
 
-        .title {
-            font-weight  : 400;
-            font-size    : 28px;
-            margin-bottom: 16px;
-        }
+                .artist {
+                    display      : inline-block;
+                    width        : 200px;
+                    margin-left  : 20px;
+                    white-space  : nowrap;
+                    overflow     : hidden;
+                    text-overflow: ellipsis;
+                }
+            }
 
-        .info {
-            .album {
-                display      : inline-block;
-                width        : 200px;
-                white-space  : nowrap;
+            .lyric {
+                width        : 100%;
+                height       : 350px;
+                margin-top   : 40px;
+                margin-bottom: 20px;
                 overflow     : hidden;
-                text-overflow: ellipsis;
-            }
 
-            .artist {
-                display      : inline-block;
-                width        : 200px;
-                margin-left  : 30px;
-                white-space  : nowrap;
-                overflow     : hidden;
-                text-overflow: ellipsis;
-            }
-        }
+                .scrollBar {
+                    border-right: 1px solid rgb(233, 233, 235);
 
-        .lyric {
-            width        : 100%;
-            height       : 350px;
-            margin-top   : 20px;
-            margin-bottom: 20px;
-            overflow     : hidden;
+                    .word {
+                        display    : block;
+                        width      : 100%;
+                        height     : 30px;
+                        line-height: 30px;
+                        font-size  : 14px;
+                        color      : rgb(112, 112, 112);
+                        text-align : left;
+                    }
+                }
 
-            .scrollBar {
-                .test {
-                    height: 900px;
-                    width : 100%;
+                .no {
+                    display   : block;
+                    height    : 100%;
+                    text-align: center;
+                    margin-top: 20%;
                 }
             }
         }
     }
+
+}
+
+.v-enter-from,
+.v-leave-to {
+    transform: translate(-50%, 60%) scale(0.01);
+    opacity  : 0;
+}
+
+.v-enter-to,
+.v-leave-from {
+    transform: translate(0, 0) scale(1);
+    opacity  : 1;
+}
+
+.v-enter-active,
+.v-leave-active {
+    transition: all .2s ease;
 }

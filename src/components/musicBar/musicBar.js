@@ -38,7 +38,8 @@ const vm = {
             url: "",
             count: 0,
             showPlayList: false,
-            showLyric: true,
+            showLyric: false,
+            lyric: []
         }
     },
     methods: {
@@ -153,6 +154,9 @@ const vm = {
                 this.playedTime = time;
                 this.lastTime = time;
                 this.formatTime();
+                if (this.showLyric) {
+                    this.jumpLyric();
+                }
             }
         },
         isPlaying(id) {
@@ -219,21 +223,74 @@ const vm = {
             this.url = music.url;
             this.playedTime = 0;
             this.currentTime = 0;
+            this.lyric = [];
             this.$refs["audio"].currentTime = 0;
             this.duration = music.duration;
             this.formatTime();
+
+            window.$axios
+                .get("/lyric?id=" + music.id)
+                .then(res => {
+                    if (res.status == 200) {
+                        this.lyric = res.data.lrc.lyric.split("\n");
+                    }
+                })
+            // .catch(() => {
+
+            // })
         },
         callList() {
             this.showPlayList = !this.showPlayList;
         },
         clickLyric() {
             this.showLyric = !this.showLyric;
+        },
+        formatLyric(word) {
+            if (word.length > 0) {
+                const reg = /(\[\d{2}:\d{2}\.\d{3}\])(.*)/g;
+                return reg.exec(word)[2];
+            }
+            else {
+                return word;
+            }
+        },
+        checkLyricTime(word) {
+            if (word.length > 0) {
+                const reg = /\[(\d{2}:\d{2})\.\d{3}\](.*)/g;
+                const time = reg.exec(word)[1];
+                if (time == this.playedTimeString) {
+                    return {
+                        color: "black",
+                        "font-size": "20px",
+                    };
+                }
+                else {
+                    return {};
+                }
+            }
+            return {};
+        },
+        jumpLyric() {
+            for (let i = 0; i < this.lyric.length; i++) {
+                if (this.lyric[i].indexOf(this.playedTimeString) == 1) {
+                    this.$refs['scroll'].wrap.scrollTop = i * 30;
+                    break;
+                }
+            }
         }
     },
     created() {
         window.addToList = this.addToList;
         this.formatTime();
         this.count = 0;
+
+        // window.$axios
+        //     .get("/lyric?id=874111") //+ music.id)
+        //     .then(res => {
+        //         if (res.status == 200) {
+        //             this.lyric = res.data.lrc.lyric.split("\n");
+        //         }
+        //     })
     },
     mounted() {
         const self = this;

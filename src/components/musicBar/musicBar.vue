@@ -8,14 +8,14 @@
           <div class="btn" @click="clickLyric">
             <i
               :class="
-                showLyric
+                !showLyric
                   ? 'leftBtn el-icon-bottom-left'
                   : 'leftBtn el-icon-top-right'
               "
             ></i>
             <i
               :class="
-                showLyric
+                !showLyric
                   ? 'rightBtn el-icon-top-right'
                   : 'rightBtn el-icon-bottom-left'
               "
@@ -154,25 +154,48 @@
       </el-scrollbar>
     </div>
     <!-- 歌词面板 -->
-    <div class="playFrame">
-      <div class="left">
-        <div class="backImg" :playing="true" :pause="!playing">
-          <img class="cover" :src="playList[index].imgUrl" alt="" srcset="" />
-        </div>
+    <transition>
+      <div class="playFrame" v-show="showLyric">
+        <el-scrollbar style="height: 100%, width:100%">
+          <div class="box">
+            <div class="left">
+              <div class="backImg" :playing="true" :pause="!playing">
+                <img
+                  class="cover"
+                  :src="playList[index].imgUrl"
+                  alt=""
+                  srcset=""
+                />
+              </div>
+            </div>
+            <div class="right">
+              <h2 class="title">{{ playList[index].name }}</h2>
+              <div class="info">
+                <span class="album">专辑： {{ playList[index].album }}</span>
+                <span class="artist">歌手： {{ playList[index].artist }}</span>
+              </div>
+              <div class="lyric">
+                <span class="no" v-if="lyric.length == 0">纯音乐</span>
+                <el-scrollbar
+                  class="scrollBar"
+                  v-if="lyric.length != 0"
+                  style="height: 100%, width:100%"
+                  ref="scroll"
+                >
+                  <span
+                    class="word"
+                    v-for="(word, index) in lyric"
+                    :key="index"
+                    :style="checkLyricTime(word)"
+                    >{{ formatLyric(word) }}</span
+                  >
+                </el-scrollbar>
+              </div>
+            </div>
+          </div>
+        </el-scrollbar>
       </div>
-      <div class="right">
-        <h2 class="title">{{ playList[index].name }}</h2>
-        <div class="info">
-          <span class="album">专辑： {{ playList[index].album }}</span>
-          <span class="artist">歌手： {{ playList[index].artist }}</span>
-        </div>
-        <div class="lyric">
-          <el-scrollbar class="scrollBar" style="height: 100%, width:100%">
-            <div class="test"></div>
-          </el-scrollbar>
-        </div>
-      </div>
-    </div>
+    </transition>
   </div>
 </template> 
 
