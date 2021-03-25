@@ -232,7 +232,8 @@ const vm = {
                 .get("/lyric?id=" + music.id)
                 .then(res => {
                     if (res.status == 200) {
-                        this.lyric = res.data.lrc.lyric.split("\n");
+                        if (res.data.nolyric !== true)
+                            this.lyric = res.data.lrc.lyric.split("\n");
                     }
                 })
             // .catch(() => {
