@@ -259,7 +259,6 @@ const vm = {
             if (word.length > 0) {
                 const reg = /\[(\d{2}:\d{2})\.\d+\](.*)/;
                 const res = reg.exec(word);
-                console.log(reg.exec(this.lyric[index + 1]), this.lyric[index + 1]);
                 const right = ((index + 1) < this.lyric.length && this.lyric[index + 1].length > 0) ? reg.exec(this.lyric[index + 1])[1] : '99:99';
                 const timeNum = parseInt(this.playedTimeString.replace(":", ""));
                 if (res[1] == this.playedTimeString
