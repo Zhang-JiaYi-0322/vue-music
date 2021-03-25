@@ -138,7 +138,6 @@ export default {
                         };
                         this.count = this.playList.count;
                         this.onLoad = true;
-                        console.log(response.data.result.playlists);
                     } else {
                         this.error = true;
                     }
