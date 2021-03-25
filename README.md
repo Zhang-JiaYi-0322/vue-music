@@ -12,10 +12,12 @@
 - 发现面板（只包含轮播图和推荐歌单）
 - 创建的歌单（只包含收藏的音乐）
 - 收藏的歌单
-- 播放器（正在施工）
+- 播放器（包括底部播放器以及点击封面弹出的歌词页面）
+- 专辑页面（复用歌单页面）
+- 歌手页面（正在施工）
 
 ## 项目运行
-> 本项目需要 [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) 在端口3000运行
+> 本项目需要 [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)（版本：4.0.9） 在端口3000运行
 ```
 $ npm install
 $ npm run serve

@@ -1,0 +1,135 @@
+.album .head {
+  display: flex;
+  align-items: center;
+  height: 242px;
+  width: 100%;
+}
+.album .head img {
+  height: 182px;
+  width: 182px;
+  border-radius: 10px;
+  border: 1px solid lightskyblue;
+  margin: 0 20px 0 30px;
+  background-color: black;
+}
+.album .head .content {
+  height: 184px;
+}
+.album .head .content .title .titleIcon {
+  position: relative;
+  top: -2px;
+  height: 18px;
+  line-height: 18px;
+  color: #ec4141;
+  border: 1px solid #ec4141;
+  border-radius: 2px;
+  margin-right: 10px;
+  padding: 0 2px;
+  font-size: 14px;
+}
+.album .head .content .title .titleContent {
+  font-size: 22px;
+}
+.album .head .content .creator {
+  margin-top: 5px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 12px;
+  color: gray;
+}
+.album .head .content .creator .creatorIcon {
+  margin: 0 10px 0 0;
+  vertical-align: middle;
+  box-sizing: border-box;
+  height: 24px;
+  width: 24px;
+  border: 1px solid #b4b4b4;
+  border-radius: 50%;
+}
+.album .head .content .creator .name {
+  margin-right: 10px;
+  color: #507daf;
+}
+.album .head .content .btn {
+  margin-top: 10px;
+}
+.album .head .content .btn .play-left {
+  width: 103px;
+  border-bottom-left-radius: 16px;
+  border-top-left-radius: 16px;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  margin-right: 0;
+  border-right: 1px solid #d04545 !important;
+}
+.album .head .content .btn .play-left .icon {
+  transform: scale(1.4);
+}
+.album .head .content .btn .play-right {
+  width: 36px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 16px;
+  border-top-right-radius: 16px;
+  margin-left: 0;
+}
+.album .head .content .btn .play {
+  height: 32px;
+  min-height: 32px;
+  box-sizing: border-box;
+  background-color: #ec4141;
+  border: 0;
+  padding: 0;
+}
+.album .head .content .btn .play:hover {
+  background-color: #cc3232;
+}
+.album .head .content .btn .saved {
+  height: 32px;
+  min-height: 32px;
+  border: 1px solid #b2b2b2;
+  border-radius: 16px;
+  background: none;
+  color: #b2b2b2;
+  padding: 0 15px;
+}
+.album .head .content .info {
+  margin-top: 15px;
+}
+.album .head .content .info .count {
+  font-size: 14px;
+  color: #666;
+}
+.album .body .titleBox {
+  margin-left: 20px;
+}
+.album .body .titleBox .title {
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+}
+.album .body .titleBox .inputBox {
+  float: right;
+  position: relative;
+  margin-right: 20px;
+  transform: translateY(-3px);
+}
+.album .body .titleBox .inputBox .input {
+  box-sizing: border-box;
+  padding: 0 30px 0 10px;
+  width: 200px;
+  height: 26px;
+  border-radius: 13px;
+  border: none;
+  outline: none;
+  background-color: #f7f7f7;
+  color: gray;
+}
+.album .body .titleBox .inputBox i {
+  position: absolute;
+  top: 6px;
+  right: 7px;
+}
+.album .body .table {
+  color: #666 !important;
+}

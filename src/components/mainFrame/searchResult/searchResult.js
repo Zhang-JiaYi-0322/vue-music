@@ -251,7 +251,7 @@ export default {
             console.log(row);
         },
         albumClick(row) {
-            console.log(row);
+            this.$router.push(`/album/${row.id}/${row.name}`);
         },
         playListClick(row) {
             this.$router.push(`/playList/${row.id}/${row.name}`);

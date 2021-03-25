@@ -1,5 +1,5 @@
 <template>
-  <div class="playList">
+  <div class="album">
     <loading
       v-if="!error && !onLoad"
       text="拼命加载中"
@@ -10,13 +10,13 @@
       <img :src="coverImg" alt="cover" />
       <div class="content">
         <div class="title">
-          <span class="titleIcon">歌单</span>
+          <span class="titleIcon">专辑</span>
           <span class="titleContent">{{ title }}</span>
         </div>
         <div class="creator">
           <img :src="creatorIcon" alt="" class="creatorIcon" />
           <span class="name">{{ creator }}</span>
-          <span class="date">{{ date + " 创建" }}</span>
+          <span class="date">{{ date + " 发布" }}</span>
         </div>
         <div class="btn">
           <el-button type="primary" class="play-left play" @click="playAll">
@@ -25,16 +25,6 @@
           </el-button>
           <el-button type="primary" class="play-right play" @click="playAll">
             <i class="el-icon-plus"> </i>
-          </el-button>
-          <el-button
-            type="primary"
-            class="saved"
-            :disabled="!canSave"
-            :style="getSavedBtnStyle()"
-            @click="savePlayList"
-          >
-            <i :class="getSavedBtnIcon()"></i>
-            {{ getSavedBtnWord() }}
           </el-button>
         </div>
         <div class="info">
@@ -119,6 +109,6 @@
   </div>
 </template>
 
-<script src="./playList.js"></script>
+<script src="./album.js"></script>
 
-<style src="./playList.css" scoped></style>
+<style src="./album.css" scoped></style>

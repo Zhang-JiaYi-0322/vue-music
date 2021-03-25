@@ -103,30 +103,6 @@ export default {
             }
             return index;
         },
-        getSavedBtnStyle() {
-            if (this.canSave) {
-                return { color: "black" };
-            }
-            else {
-                return { color: "#666" };
-            }
-        },
-        getSavedBtnIcon() {
-            if (this.$route.params.id == "favorite" || this.saved == false) {
-                return "el-icon-folder-add";
-            }
-            else {
-                return "el-icon-folder-checked";
-            }
-        },
-        getSavedBtnWord() {
-            if (this.$route.params.id == "favorite" || this.saved == false) {
-                return "收藏";
-            }
-            else {
-                return "已收藏";
-            }
-        },
         search() {
             this.songs = [];
             this.songsLib.map(song => {
@@ -201,21 +177,6 @@ export default {
                 window.addToList(obj);
             }
         },
-        savePlayList() {
-            let storage = JSON.parse(localStorage.getItem("savedPlayList") || "[]");
-            const id = this.$route.params.id;
-            const res = this.checkSavedList(storage, id);
-            if (res.found) {
-                storage.splice(res.index, 1);
-                this.saved = false;
-            }
-            else {
-                storage.push({ id, label: this.$route.params.name });
-                this.saved = true;
-            }
-            localStorage.setItem("savedPlayList", JSON.stringify(storage));
-            this.$emit("reloadList");
-        },
         getDate(time) {
             const yyyy = time.getFullYear();
             const mm = (time.getMonth() + 1).toString().padStart(2, "0");
@@ -234,41 +195,27 @@ export default {
             id = id ? id : this.$route.params.id;
             name = name ? name : this.$route.params.name;
             this.title = name;
-            if (id == "favorite") {
-                this.creator = "自己";
-                this.canSave = false;
-                this.favoriteList = true;
-                this.getSongs(JSON.parse(localStorage.getItem("favorite") || "[]"));
-            }
-            else {
-                this.canSave = true;
-                const storage = JSON.parse(localStorage.getItem("savedPlayList") || "[]");
-                const res = this.checkSavedList(storage, id);
-                if (res.found) {
-                    this.saved = true;
-                }
-                else {
-                    this.saved = false;
-                }
-                window.$axios
-                    .get("/playlist/detail?id=" + id)
-                    .then(res => {
-                        if (res.status == 200) {
-                            const data = res.data.playlist;
-                            this.coverImg = data.coverImgUrl;
-                            this.creator = data.creator.nickname;
-                            this.creatorIcon = data.creator.avatarUrl;
-                            this.date = this.getDate(new Date(data.createTime));
-                            this.getSongs(data.trackIds.map(item => item.id));
-                        }
-                        else {
-                            this.error = true;
-                        }
-                    })
-                    .catch(() => {
+
+            window.$axios
+                .get("/album?id=" + id)
+                .then(res => {
+                    if (res.status == 200) {
+                        const data = res.data;
+                        this.coverImg = data.album.picUrl;
+                        this.creator = data.album.artist.name;
+                        this.creatorIcon = data.album.artist.picUrl;
+                        this.date = this.getDate(new Date(data.album.publishTime));
+                        this.getSongs(data.songs.map(item => item.id));
+                        this.onLoad = true;
+                    }
+                    else {
                         this.error = true;
-                    })
-            }
+                    }
+                })
+                .catch((e) => {
+                    console.log(e);
+                    this.error = true;
+                });
         },
         reload() {
             this.isTableAlive = false;
@@ -298,12 +245,12 @@ export default {
         this.onLoad = false;
         this.songs = [];
         this.songsLib = [];
-        this.title = "歌单"
+        this.title = "专辑"
         this.date = "2021-3-22";
         this.creator = "???";
         this.creatorIcon = creatorIcon;
         this.coverImg = coverImg;
-        this.inputKey = "搜索歌单音乐";
+        this.inputKey = "搜索专辑音乐";
         this.favoriteList = false;
         this.init(to.params.id, to.params.name);
         next();
