@@ -186,7 +186,7 @@
                     class="word"
                     v-for="(word, index) in lyric"
                     :key="index"
-                    :style="checkLyricTime(word)"
+                    :style="checkLyricTime(word, index)"
                     >{{ formatLyric(word) }}</span
                   >
                 </el-scrollbar>

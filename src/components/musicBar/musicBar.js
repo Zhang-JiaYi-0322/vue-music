@@ -247,18 +247,24 @@ const vm = {
         },
         formatLyric(word) {
             if (word.length > 0) {
-                const reg = /(\[\d{2}:\d{2}\.\d{3}\])(.*)/g;
-                return reg.exec(word)[2];
+                const reg = /(\[\d{2}:\d{2}\.\d+\])(.*)/g;
+                const res = reg.exec(word);
+                return res[2];
             }
             else {
                 return word;
             }
         },
-        checkLyricTime(word) {
+        checkLyricTime(word, index) {
             if (word.length > 0) {
-                const reg = /\[(\d{2}:\d{2})\.\d{3}\](.*)/g;
-                const time = reg.exec(word)[1];
-                if (time == this.playedTimeString) {
+                const reg = /\[(\d{2}:\d{2})\.\d+\](.*)/;
+                const res = reg.exec(word);
+                console.log(reg.exec(this.lyric[index + 1]), this.lyric[index + 1]);
+                const right = ((index + 1) < this.lyric.length && this.lyric[index + 1].length > 0) ? reg.exec(this.lyric[index + 1])[1] : '99:99';
+                const timeNum = parseInt(this.playedTimeString.replace(":", ""));
+                if (res[1] == this.playedTimeString
+                    || (timeNum > parseInt(res[1].replace(":", ""))
+                        && timeNum < parseInt(right.replace(":", "")))) {
                     return {
                         color: "black",
                         "font-size": "20px",
@@ -271,9 +277,10 @@ const vm = {
             return {};
         },
         jumpLyric() {
+            if (!this.$refs['scroll']) return;
             for (let i = 0; i < this.lyric.length; i++) {
                 if (this.lyric[i].indexOf(this.playedTimeString) == 1) {
-                    this.$refs['scroll'].wrap.scrollTop = i * 30;
+                    this.$refs['scroll'].wrap.scrollTop = ((i - 4) >= 0 ? i - 4 : 0) * 40;
                     break;
                 }
             }
