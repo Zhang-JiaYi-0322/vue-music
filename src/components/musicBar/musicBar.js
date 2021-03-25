@@ -13,6 +13,7 @@ const vm = {
                     artist: "none",
                     duration: -1,
                     time: "--:--",
+                    album: "none",
                     favorite: false,
                     favoriteAble: false,
                 }
@@ -36,7 +37,8 @@ const vm = {
             sound: 20,
             url: "",
             count: 0,
-            showPlayList: false
+            showPlayList: false,
+            showLyric: true,
         }
     },
     methods: {
@@ -202,6 +204,7 @@ const vm = {
                     music.favorite = self.checkFavorite(music.id);
                     music.url = dataA.url;
                     music.imgUrl = dataB.picUrl;
+                    music.album = b.data.album.name;
                 }
                 if (self.playList[0] && self.playList[0].id == -1) self.playList = [];
                 self.playList.unshift(music);
@@ -223,6 +226,9 @@ const vm = {
         callList() {
             this.showPlayList = !this.showPlayList;
         },
+        clickLyric() {
+            this.showLyric = !this.showLyric;
+        }
     },
     created() {
         window.addToList = this.addToList;

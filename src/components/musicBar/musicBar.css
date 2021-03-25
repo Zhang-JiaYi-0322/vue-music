@@ -10,12 +10,48 @@
   align-items: center;
   margin-left: 10px;
 }
-.musicBar .info .icon {
-  background-color: #666;
+.musicBar .info .img {
   width: 45px;
   height: 45px;
   margin-right: 10px;
   border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+.musicBar .info .img:hover .btn {
+  opacity: 1;
+}
+.musicBar .info .img:hover .icon {
+  filter: blur(2px);
+}
+.musicBar .info .img .btn {
+  position: absolute;
+  top: -4px;
+  width: 45px;
+  height: 45px;
+  border-radius: 3px;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-right: 0;
+}
+.musicBar .info .img .btn .leftBtn,
+.musicBar .info .img .btn .rightBtn {
+  z-index: 3;
+  font-size: 20px;
+  color: #fff;
+  position: absolute;
+}
+.musicBar .info .img .btn .leftBtn {
+  bottom: 0;
+}
+.musicBar .info .img .btn .rightBtn {
+  right: 0;
+}
+.musicBar .info .img .icon {
+  background-color: #666;
+  width: 45px;
+  height: 45px;
+  position: relative;
 }
 .musicBar .info .rows {
   color: #666;
@@ -129,7 +165,7 @@
 .playList {
   float: right;
   position: absolute;
-  z-index: 99;
+  z-index: 888;
   bottom: 71px;
   right: 0;
   height: 500px;
@@ -186,4 +222,85 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.playFrame {
+  position: absolute;
+  top: 58px;
+  bottom: 70px;
+  width: 100%;
+  background-color: burlywood;
+  overflow: auto;
+  z-index: 777;
+  display: flex;
+  overflow: hidden;
+}
+.playFrame .left {
+  width: 50%;
+  min-width: 410px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.playFrame .left .backImg {
+  width: 410px;
+  height: 410px;
+  background-image: url('../../assets/coverall.png');
+  background-position: -285px -1161px;
+  background-size: 760px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.playFrame .left .backImg .cover {
+  background-color: black;
+  width: 263px;
+  height: 263px;
+  margin-left: -8px;
+  margin-top: -2px;
+  border-radius: 50%;
+}
+.playFrame .left [playing=true] {
+  animation-name: roll;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.playFrame .left [pause=true] {
+  animation-play-state: paused;
+}
+.playFrame .right {
+  padding-left: 50px;
+  padding-top: 30px;
+}
+.playFrame .right .title {
+  font-weight: 400;
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+.playFrame .right .info .album {
+  display: inline-block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.playFrame .right .info .artist {
+  display: inline-block;
+  width: 200px;
+  margin-left: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.playFrame .right .lyric {
+  width: 100%;
+  height: 350px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.playFrame .right .lyric .scrollBar .test {
+  height: 900px;
+  width: 100%;
 }

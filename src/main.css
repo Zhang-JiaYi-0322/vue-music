@@ -88,3 +88,13 @@ li.active {
 .tableRow * {
   padding: 0 !important;
 }
+
+@keyframes roll {
+  0% {
+      transform: rotate(0deg);
+  }
+
+  100% {
+      transform: rotate(360deg);
+  }
+}

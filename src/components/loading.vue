@@ -23,5 +23,6 @@ export default {
 .loading {
   height: 80px;
   background-color: transparent;
+  z-index: 0;
 }
 </style>

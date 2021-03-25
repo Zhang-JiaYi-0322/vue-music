@@ -3,7 +3,25 @@
     <div class="musicBar">
       <!-- 左侧 -->
       <div class="info">
-        <img :src="playList[index].imgUrl" alt="" class="icon" />
+        <div class="img">
+          <img :src="playList[index].imgUrl" alt="" class="icon" />
+          <div class="btn" @click="clickLyric">
+            <i
+              :class="
+                showLyric
+                  ? 'leftBtn el-icon-bottom-left'
+                  : 'leftBtn el-icon-top-right'
+              "
+            ></i>
+            <i
+              :class="
+                showLyric
+                  ? 'rightBtn el-icon-top-right'
+                  : 'rightBtn el-icon-bottom-left'
+              "
+            ></i>
+          </div>
+        </div>
         <div class="rows">
           <span class="title">{{ playList[index].name }}</span>
           <span class="artist">{{ playList[index].artist }}</span>
@@ -134,6 +152,26 @@
           <!-- <el-table-column prop="" label="" width="5"> </el-table-column> -->
         </el-table>
       </el-scrollbar>
+    </div>
+    <!-- 歌词面板 -->
+    <div class="playFrame">
+      <div class="left">
+        <div class="backImg" :playing="true" :pause="!playing">
+          <img class="cover" :src="playList[index].imgUrl" alt="" srcset="" />
+        </div>
+      </div>
+      <div class="right">
+        <h2 class="title">{{ playList[index].name }}</h2>
+        <div class="info">
+          <span class="album">专辑： {{ playList[index].album }}</span>
+          <span class="artist">歌手： {{ playList[index].artist }}</span>
+        </div>
+        <div class="lyric">
+          <el-scrollbar class="scrollBar" style="height: 100%, width:100%">
+            <div class="test"></div>
+          </el-scrollbar>
+        </div>
+      </div>
     </div>
   </div>
 </template> 
