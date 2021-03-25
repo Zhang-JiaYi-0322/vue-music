@@ -28,9 +28,9 @@ const vm = {
             durationString: "--:--",
             playing: false,
             playModeList: [
-                "icon ion-shuffle btn",
-                "icon ion-arrow-return-right btn",
-                "icon ion-navicon-round btn"
+                "icon ion-shuffle btn",             // random
+                "icon ion-arrow-return-right btn",  // circle
+                "icon ion-navicon-round btn"        // order
             ],
             playMode: 0,
             sound: 20,
@@ -99,11 +99,36 @@ const vm = {
         skipPlay(direction) {
             if (this.playList[0].id != -1) {
                 if (direction == -1) {
-                    console.log(-1);
+                    switch (this.playMode) {
+                        case 0:
+                            this.index = Math.floor(Math.random() * this.playList.length);
+                            break;
+                        case 1:
+                            this.index--;
+                            if (this.index < 0) this.index = this.playList.length - 1;
+                            break;
+                        case 2:
+                            this.index--;
+                            if (this.index < 0) this.index = 0;
+                            break;
+                    }
                 }
                 else {
-                    console.log(1);
+                    switch (this.playMode) {
+                        case 0:
+                            this.index = Math.floor(Math.random() * this.playList.length);
+                            break;
+                        case 1:
+                            this.index++;
+                            if (this.index >= this.playList.length) this.index = 0;
+                            break;
+                        case 2:
+                            this.index++;
+                            if (this.index >= this.playList.length) this.index = this.playList.length - 1;
+                            break;
+                    }
                 }
+                this.setMusic(this.index);
             }
         },
         changePlayMode() {
@@ -197,7 +222,7 @@ const vm = {
         },
         callList() {
             this.showPlayList = !this.showPlayList;
-        }
+        },
     },
     created() {
         window.addToList = this.addToList;
