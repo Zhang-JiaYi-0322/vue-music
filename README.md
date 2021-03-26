@@ -24,3 +24,26 @@
 $ npm install
 $ npm run serve
 ```
+
+## 效果展示
+> 发现音乐页面
+
+![1.png](./pic/1.png)
+
+> 歌单页面
+
+![2.png](./pic/2.png)
+
+> 搜索面板及搜索结果页面
+
+![6.png](./pic/6.png)
+
+![3.png](./pic/3.png)
+
+> 播放面板（歌词滚动）
+
+![4.png](./pic/4.png)
+
+> 歌手页面
+
+![5.png](./pic/5.png)
