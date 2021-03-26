@@ -15,7 +15,16 @@ export default {
                 window.open(target.url);
             }
             else if (target.song) {
-                console.log(target.song);
+                const artist = target.song.ar[0].name;
+                const obj = {
+                    id: target.song.id,
+                    name: target.song.name,
+                    artist,
+                    duration: Math.floor(target.song.dt / 1000),
+                    albumId: target.song.al.id,
+                    album: target.song.al.name
+                }
+                window.addToList(obj);
             }
         },
         playListClick(target) {

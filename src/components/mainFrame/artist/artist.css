@@ -1,3 +1,6 @@
+.page {
+  margin: 0;
+}
 .page .title {
   height: 200px;
   width: 100%;
@@ -11,7 +14,7 @@
   overflow: hidden;
   border-radius: 10px;
   border: 1px solid #666;
-  margin: 30px 20px 30px 30px;
+  margin: 30px 20px 20px 30px;
   display: inline-block;
 }
 .page .title .cover .img {
@@ -23,6 +26,7 @@
   display: inline-block;
   height: 100%;
   margin: 30px 0 30px 0px;
+  text-align: left;
 }
 .page .title .info .name {
   margin: 0;
@@ -42,6 +46,7 @@
 }
 .page .tab .contentBox .infoBox {
   margin-bottom: 30px;
+  text-align: left;
 }
 .page .tab .contentBox .infoBox .box .word {
   display: block;
@@ -49,4 +54,30 @@
   font-size: 14px;
   line-height: 30px;
   padding-left: 20px;
+}
+.page .tab .table {
+  color: #92959c;
+}
+.page .tab .table .img {
+  height: 60px;
+  width: 180px;
+  border-radius: 3px;
+  position: relative;
+}
+.page .tab .table .img .cover {
+  height: 100%;
+  z-index: 2;
+}
+.page .tab .table .img .back {
+  position: absolute;
+  top: 0;
+  left: 60px;
+  height: 100%;
+  width: 20px;
+  background-image: url("../../../assets/coverall.png");
+  background-size: 222px auto;
+  background-position: -59px -332px;
+}
+.page .tab .table .name {
+  color: #666;
 }

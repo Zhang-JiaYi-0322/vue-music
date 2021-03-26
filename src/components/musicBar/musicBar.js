@@ -199,21 +199,33 @@ const vm = {
                 self.setMusic(0);
             }
             else {
-                window.$axios.get(`/song/url?id=${obj.id}&br=192000`)
+                music = obj;
+                if (!music.imgUrl) {
+                    window.$axios
+                        .get(`/album?id=${obj.albumId}`)
+                        .then(res => {
+                            if (res.status == 200) {
+                                music.imgUrl = res.data.album.picUrl;
+                            }
+                        });
+                }
+                window.$axios
+                    .get(`/song/url?id=${obj.id}&br=192000`)
                     .then(res => {
-                        const dataA = res.data.data[0];
-                        music = obj;
-                        const time = music.duration / 60;
-                        const mm = Math.floor(time).toString().padStart(2, "0");
-                        const ss = Math.round((time - mm) * 60).toString().padStart(2, "0");
-                        music.time = `${mm}:${ss}`;
-                        music.favorite = self.checkFavorite(music.id);
-                        music.url = dataA.url;
-                        if (self.playList[0] && self.playList[0].id == -1) self.playList = [];
-                        self.playList.unshift(music);
-                        self.playListId.unshift(music.id);
-                        self.count = self.playList.length;
-                        self.setMusic(0);
+                        if (res.status == 200) {
+                            const dataA = res.data.data[0];
+                            const time = music.duration / 60;
+                            const mm = Math.floor(time).toString().padStart(2, "0");
+                            const ss = Math.round((time - mm) * 60).toString().padStart(2, "0");
+                            music.time = `${mm}:${ss}`;
+                            music.favorite = self.checkFavorite(music.id);
+                            music.url = dataA.url;
+                            if (self.playList[0] && self.playList[0].id == -1) self.playList = [];
+                            self.playList.unshift(music);
+                            self.playListId.unshift(music.id);
+                            self.count = self.playList.length;
+                            self.setMusic(0);
+                        }
                     });
             }
         },

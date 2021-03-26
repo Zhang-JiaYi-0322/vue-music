@@ -234,7 +234,9 @@ export default {
                     name: row.name,
                     artist: this.artistFormatter(row),
                     duration: Math.floor(row.duration / 1000),
-                    albumId: row.album.id
+                    albumId: row.album.id,
+                    album: row.album.name,
+                    // imgUrl: song.img
                 }
                 window.addToList(obj);
             }

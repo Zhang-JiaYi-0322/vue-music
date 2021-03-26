@@ -16,8 +16,52 @@
         <span class="albumSize">专辑数：{{ titleInfo.albumSize }}</span>
       </div>
     </div>
-    <el-tabs class="tab">
-      <el-tab-pane label="专辑" name="first">专辑</el-tab-pane>
+    <el-tabs class="tab" v-if="onLoad" v-model="index">
+      <el-tab-pane label="专辑" name="first">
+        <el-table
+          class="table"
+          :data="albums"
+          :show-header="false"
+          stripe
+          style="width: 100%"
+          @row-click="rowClick"
+        >
+          <el-table-column prop="" label="" width="30"></el-table-column>
+          <!-- img -->
+          <el-table-column prop="" label="" width="100">
+            <template #default="scope">
+              <div class="img">
+                <div class="back"></div>
+                <img :src="scope.row.picUrl" alt="" class="cover" />
+              </div>
+            </template>
+          </el-table-column>
+          <!-- name -->
+          <el-table-column prop="" label="" width="500">
+            <template #default="scope">
+              <span class="name">{{ scope.row.name }}</span>
+              <span class="alias" v-if="scope.row.alias.length > 0"
+                >（{{ scope.row.alias[0] }}）</span
+              >
+            </template>
+          </el-table-column>
+          <!-- size -->
+          <el-table-column prop="" label="" width="">
+            <template #default="scope">
+              <span class="size">{{ scope.row.size }}首</span>
+            </template>
+          </el-table-column>
+          <!-- publishTime -->
+          <el-table-column prop="" label="" width="">
+            <template #default="scope">
+              <span class="time"
+                >发布时间： {{ formatDate(scope.row.publishTime) }}</span
+              >
+            </template>
+          </el-table-column>
+          <el-table-column prop="" label="" width="50"></el-table-column>
+        </el-table>
+      </el-tab-pane>
       <el-tab-pane label="歌手详情" name="second">
         <div class="contentBox">
           <div class="infoBox" v-for="(item, index) in detail" :key="index">

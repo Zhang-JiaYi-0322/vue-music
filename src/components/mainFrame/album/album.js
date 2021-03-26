@@ -214,8 +214,7 @@ export default {
                         this.error = true;
                     }
                 })
-                .catch((e) => {
-                    console.log(e);
+                .catch(() => {
                     this.error = true;
                 });
         },
