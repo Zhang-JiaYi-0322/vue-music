@@ -301,14 +301,6 @@ const vm = {
         window.addToList = this.addToList;
         this.formatTime();
         this.count = 0;
-
-        // window.$axios
-        //     .get("/lyric?id=874111") //+ music.id)
-        //     .then(res => {
-        //         if (res.status == 200) {
-        //             this.lyric = res.data.lrc.lyric.split("\n");
-        //         }
-        //     })
     },
     mounted() {
         const self = this;
