@@ -9,7 +9,7 @@ import artist from "./components/mainFrame/artist/artist.vue";
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        { path: "/", redirect: "/searchResult/偶像大师" },
+        { path: "/", redirect: "/foundMusic" },
         { path: "/foundMusic", component: foundMusic },
         { path: "/searchResult/:info", component: searchResult },
         { path: "/playList/:id/:name", component: playList },
