@@ -199,31 +199,23 @@ const vm = {
                 self.setMusic(0);
             }
             else {
-                window.$axios.all([
-                    window.$axios.get(`/song/url?id=${obj.id}&br=192000`),
-                    window.$axios.get(`/album?id=${obj.albumId}`)
-                ]).then(window.$axios.spread(function (a, b) {
-                    const dataA = a.data.data[0];
-                    const dataB = b.data.album;
-                    music = obj;
-                    const time = music.duration / 60;
-                    const mm = Math.floor(time).toString().padStart(2, "0");
-                    const ss = Math.round((time - mm) * 60).toString().padStart(2, "0");
-                    music.time = `${mm}:${ss}`;
-                    music.favorite = self.checkFavorite(music.id);
-                    music.url = dataA.url;
-                    music.imgUrl = dataB.picUrl;
-                    music.album = b.data.album.name;
-                    if (self.playList[0] && self.playList[0].id == -1) self.playList = [];
-                    self.playList.unshift(music);
-                    self.playListId.unshift(music.id);
-                    self.count = self.playList.length;
-                    self.setMusic(0);
-                }));
+                window.$axios.get(`/song/url?id=${obj.id}&br=192000`)
+                    .then(res => {
+                        const dataA = res.data.data[0];
+                        music = obj;
+                        const time = music.duration / 60;
+                        const mm = Math.floor(time).toString().padStart(2, "0");
+                        const ss = Math.round((time - mm) * 60).toString().padStart(2, "0");
+                        music.time = `${mm}:${ss}`;
+                        music.favorite = self.checkFavorite(music.id);
+                        music.url = dataA.url;
+                        if (self.playList[0] && self.playList[0].id == -1) self.playList = [];
+                        self.playList.unshift(music);
+                        self.playListId.unshift(music.id);
+                        self.count = self.playList.length;
+                        self.setMusic(0);
+                    });
             }
-        },
-        addAllToList() {
-
         },
         setMusic(index) {
             this.index = index;
@@ -269,7 +261,7 @@ const vm = {
             if (word.length > 0) {
                 const reg = /\[(\d{2}:\d+)(\.?:?\d+)?\](.*)/;
                 const res = reg.exec(word);
-                console.log(this.lyric[index + 1]);
+                // console.log(this.lyric[index + 1]);
                 const right = ((index + 1) < this.lyric.length && this.lyric[index + 1].length > 0) ? reg.exec(this.lyric[index + 1])[1] : '99:99';
                 const timeNum = parseInt(this.playedTimeString.replace(":", ""));
                 // console.log(res);

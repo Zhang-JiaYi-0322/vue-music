@@ -172,7 +172,9 @@ export default {
                     name: row.name,
                     artist: row.artist,
                     duration: Math.floor(row.totalTime / 1000),
-                    albumId: row.albumId
+                    albumId: row.albumId,
+                    album: row.album,
+                    imgUrl: row.img
                 }
                 window.addToList(obj);
             }
@@ -231,7 +233,9 @@ export default {
                     name: song.name,
                     artist: song.artist,
                     duration: Math.floor(song.totalTime / 1000),
-                    albumId: song.albumId
+                    albumId: song.albumId,
+                    album: song.album,
+                    imgUrl: song.img
                 });
             }
         }
