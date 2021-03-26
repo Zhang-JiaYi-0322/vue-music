@@ -265,6 +265,8 @@ export default {
     beforeUpdate() {
         if (this.keyWord != this.$route.params.info) {
             this.keyWord = this.$route.params.info;
+            this.error = false;
+            this.onLoad = false;
             this.activeName = "first";
             this.getSong();
         }

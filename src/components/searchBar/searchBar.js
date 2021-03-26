@@ -34,8 +34,8 @@ export default {
         this.searchFocus = false;
       }
     },
-    search(key = undefined) {
-      const info = key ? key : this.searchKey;
+    search(key) {
+      const info = typeof key == 'string' ? key : this.searchKey;
       let history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
       const index = history.indexOf(info)
       if (index >= 0) {
