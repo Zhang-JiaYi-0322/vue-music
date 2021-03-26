@@ -4,6 +4,7 @@ import searchResult from "./components/mainFrame/searchResult/searchResult.vue";
 import playList from "./components/mainFrame/playList/playList.vue";
 import foundMusic from "./components/mainFrame/foundMusic/foundMusic.vue";
 import album from "./components/mainFrame/album/album.vue";
+import artist from "./components/mainFrame/artist/artist.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -13,6 +14,7 @@ const router = createRouter({
         { path: "/searchResult/:info", component: searchResult },
         { path: "/playList/:id/:name", component: playList },
         { path: "/album/:id/:name", component: album },
+        { path: "/artist/:id/:name", component: artist },
     ],
 });
 

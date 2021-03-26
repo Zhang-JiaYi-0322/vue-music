@@ -91,10 +91,14 @@ li.active {
 
 @keyframes roll {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
+}
+
+.tab .el-tabs__active-bar {
+  background-color: rgb(236, 65, 65) !important;
 }

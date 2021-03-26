@@ -38,9 +38,6 @@ export default {
                     alert("search type wrong: " + this.activeName);
             }
         },
-        searchArtist() {
-            console.log("searchArtist");
-        },
         getSong(offset = 0) {
             window.$axios
                 .get(
@@ -244,11 +241,11 @@ export default {
         },
         // 最佳匹配的歌手点击事件
         artistClick() {
-            console.log("artist click");
+            this.$router.push(`/artist/${this.song.artist.id}/${this.song.artist.name}`);
         },
         // 歌手列表的点击事件
         artistListClick(row) {
-            console.log(row);
+            this.$router.push(`/artist/${row.id}/${row.name}`);
         },
         albumClick(row) {
             this.$router.push(`/album/${row.id}/${row.name}`);

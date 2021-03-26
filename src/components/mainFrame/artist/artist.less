@@ -1,0 +1,70 @@
+.page {
+    .title {
+        height       : 200px;
+        width        : 100%;
+        display      : flex;
+        margin-bottom: 60px;
+
+        .cover {
+            box-sizing   : border-box;
+            width        : 200px;
+            height       : 200px;
+            overflow     : hidden;
+            border-radius: 10px;
+            border       : 1px solid #666;
+            margin       : 30px 20px 30px 30px;
+            display      : inline-block;
+
+            .img {
+                height     : 200px;
+                margin-left: 50%;
+                transform  : translateX(-50%);
+            }
+        }
+
+        .info {
+            display: inline-block;
+            height : 100%;
+            margin : 30px 0 30px 0px;
+
+            .name {
+                margin: 0;
+            }
+
+            span {
+                display   : block;
+                margin-top: 20px;
+            }
+
+            .musicSize {
+                margin-top: 50px;
+            }
+        }
+    }
+
+    .tab {
+        .contentBox {
+            margin: 30px 30px 0 30px;
+
+            .label {
+                font-size: 16px;
+            }
+
+            .infoBox {
+                margin-bottom: 30px;
+
+                .box {
+                    .word {
+                        display       : block;
+                        color         : rgb(103, 103, 103);
+                        font-size     : 14px;
+                        // height     : 30px;
+                        line-height   : 30px;
+                        padding-left  : 20px;
+                    }
+                }
+            }
+
+        }
+    }
+}

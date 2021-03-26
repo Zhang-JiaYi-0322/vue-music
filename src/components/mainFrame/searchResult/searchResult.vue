@@ -13,9 +13,9 @@
       <loading v-if="error" text="加载失败" icon="el-icon-close"></loading>
       <!-- song -->
       <el-tab-pane v-if="onLoad" class="song" label="单曲" name="first">
-        <div class="artist" v-if="index == 0" @click="artistClick">
+        <div class="artist" v-if="index == 0">
           <h5 class="match">最佳匹配</h5>
-          <a href="#" @click.prevent="searchArtist">
+          <a href="#" @click.prevent="artistClick">
             <img :src="song.artist.img1v1Url" alt="" srcset="" />
             <span>歌手：{{ song.artist.name }}</span>
             <i class="el-icon-arrow-right"> </i>
