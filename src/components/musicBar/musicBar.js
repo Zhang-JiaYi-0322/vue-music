@@ -256,7 +256,7 @@ const vm = {
         },
         formatLyric(word) {
             if (word.length > 0) {
-                const reg = /(\[\d{2}:\d{2}\.?:?\d*\])(.*)/g;
+                const reg = /(\[\d{2}:\d+\.?:?\d*\])(.*)/g;
                 const res = reg.exec(word);
                 return res[2];
             }
@@ -267,9 +267,9 @@ const vm = {
         checkLyricTime(word, index) {
             if (this.lyric.length == 0) return {};
             if (word.length > 0) {
-                const reg = /\[(\d{2}:\d{2})(\.?:?\d+)?\](.*)/;
+                const reg = /\[(\d{2}:\d+)(\.?:?\d+)?\](.*)/;
                 const res = reg.exec(word);
-                // console.log(this.lyric[index + 1]);
+                console.log(this.lyric[index + 1]);
                 const right = ((index + 1) < this.lyric.length && this.lyric[index + 1].length > 0) ? reg.exec(this.lyric[index + 1])[1] : '99:99';
                 const timeNum = parseInt(this.playedTimeString.replace(":", ""));
                 // console.log(res);
